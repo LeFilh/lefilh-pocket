@@ -1022,7 +1022,8 @@ function init() {
       </div>`;
     return;
   }
-  if (!TOKEN) { showScreen('setup'); return; }
+ // Token géré par Cloudflare Worker
+// if (!TOKEN) { showScreen('setup'); return; }
   if (!currentUser) { showScreen('name'); return; }
   document.getElementById('user-chip').textContent = currentUser;
   showScreen('home');
@@ -1033,47 +1034,29 @@ function init() {
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 async function airtable(table, params = '') {
-  const baseUrl = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(table)}${params}`;
+  const res = await fetch(`${API_BASE}/api/table/${encodeURIComponent(table)}${params}`);
 
-  async function fetchAirtable(url, attempt = 1) {
-    const res = await fetch(url, { headers: { Authorization: `Bearer ${TOKEN}` } });
-
-    // Airtable peut renvoyer 429 si trop de requêtes : on attend puis on réessaie.
-    if (res.status === 429 && attempt <= 4) {
-      await sleep(1000 * attempt);
-      return fetchAirtable(url, attempt + 1);
-    }
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error(`Airtable ${res.status} sur table "${table}" : ${errorText.substring(0, 180)}`);
-    }
-
-    return await res.json();
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`API ${res.status} sur table "${table}" : ${errorText.substring(0, 200)}`);
   }
 
-  const data = await fetchAirtable(baseUrl);
-  let records = data.records || [];
-  let offset = data.offset;
-
-  while (offset) {
-    await sleep(500);
-    const separator = baseUrl.includes('?') ? '&' : '?';
-    const d2 = await fetchAirtable(`${baseUrl}${separator}offset=${offset}`);
-    records = [...records, ...(d2.records || [])];
-    offset = d2.offset;
-  }
-
-  return records;
+  const data = await res.json();
+  return data.records || [];
 }
 
 async function airtablePost(table, fields) {
-  const res = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(table)}`, {
+  const res = await fetch(`${API_BASE}/api/table/${encodeURIComponent(table)}`, {
     method: 'POST',
-    headers: { Authorization: `Bearer ${TOKEN}`, 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fields })
   });
-  if (!res.ok) { const e = await res.json(); throw new Error(JSON.stringify(e)); }
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`API POST ${res.status} sur table "${table}" : ${errorText.substring(0, 200)}`);
+  }
+
   return await res.json();
 }
 
