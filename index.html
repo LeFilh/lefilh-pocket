@@ -1,0 +1,2679 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Le Filh Pocket</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600&display=swap');
+@font-face {
+  font-family: 'RastantyCortez';
+  src: url('https://db.onlinewebfonts.com/t/2342e9c3e6b4d2b3e8e3f4a5b6c7d8e9.woff2') format('woff2');
+  font-weight: bold;
+}
+</style>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --black: #111;
+  --white: #fff;
+  --gray: #888;
+  --light: #f5f5f5;
+  --border: #e0e0e0;
+  --success: #2d7a45;
+}
+body {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  background: var(--white);
+  color: var(--black);
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+}
+input, select, textarea, button { font-family: 'Raleway', sans-serif; }
+
+/* HEADER */
+.header {
+  background: var(--white);
+  display: flex;
+  align-items: stretch;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+}
+.header-left {
+  background: var(--black);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.logo {
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-family: 'Raleway', sans-serif;
+  white-space: nowrap;
+}
+.header-right-wrap {
+  flex: 1;
+  background: var(--white);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pocket-label {
+  font-family: 'RastantyCortez', 'Playfair Display', 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--black);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.user-chip {
+  background: var(--black);
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-family: 'Raleway', sans-serif;
+}
+.settings-btn {
+  background: none;
+  border: none;
+  color: var(--gray);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* SCREENS */
+.screen { display: none; flex-direction: column; min-height: calc(100vh - 52px); }
+.screen.active { display: flex; }
+
+/* SETUP SCREEN */
+.setup-screen {
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+.setup-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-align: center;
+}
+.setup-subtitle {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--gray);
+  text-align: center;
+  line-height: 1.7;
+}
+.setup-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid var(--border);
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--black);
+  background: transparent;
+  letter-spacing: 0.04em;
+}
+.setup-input:focus { outline: none; border-bottom-color: var(--black); }
+
+/* BUTTONS */
+.btn {
+  padding: 14px 20px;
+  border: none;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  width: 100%;
+}
+.btn:active { opacity: 0.8; }
+.btn-black { background: var(--black); color: var(--white); }
+.btn-outline { background: var(--white); color: var(--black); border: 1px solid var(--border); }
+.btn-success { background: var(--success); color: var(--white); }
+
+/* HOME SCREEN */
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  margin: 1px;
+  flex: 1;
+}
+.home-tile {
+  background: var(--white);
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+  min-height: 140px;
+  justify-content: flex-end;
+}
+.home-tile:active { background: var(--light); }
+.home-tile-icon { font-size: 28px; margin-bottom: 4px; }
+.home-tile-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+.home-tile-sub { font-size: 11px; font-weight: 300; color: var(--gray); }
+
+/* CUSTOMER SCREEN */
+.screen-header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--black);
+  padding: 0;
+  line-height: 1;
+}
+.screen-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.search-wrap {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.search-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid var(--border);
+  padding: 10px 0;
+  font-size: 15px;
+  font-weight: 300;
+  background: transparent;
+  color: var(--black);
+}
+.search-input:focus { outline: none; border-bottom-color: var(--black); }
+.search-input::placeholder { color: #ccc; font-weight: 300; }
+.customer-list { flex: 1; overflow-y: auto; }
+.customer-item {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.15s;
+}
+.customer-item:active { background: var(--light); }
+.customer-name { font-size: 16px; font-weight: 300; color: var(--black); }
+.customer-email { font-size: 12px; font-weight: 300; color: var(--gray); margin-top: 2px; }
+.customer-arrow { font-size: 18px; color: var(--border); }
+.new-customer-btn {
+  margin: 16px 20px;
+  padding: 14px;
+  border: 1.5px dashed var(--border);
+  background: transparent;
+  cursor: pointer;
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray);
+  width: calc(100% - 40px);
+  transition: border-color 0.2s;
+}
+.new-customer-btn:active { border-color: var(--black); color: var(--black); }
+
+/* FORM */
+.form-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-size: 10px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); }
+.field input, .field select {
+  border: none;
+  border-bottom: 1.5px solid var(--border);
+  padding: 10px 0;
+  font-size: 15px;
+  font-weight: 300;
+  background: transparent;
+  color: var(--black);
+  font-family: 'Raleway', sans-serif;
+  -webkit-appearance: none;
+}
+.field input:focus, .field select:focus { outline: none; border-bottom-color: var(--black); }
+.field select { cursor: pointer; }
+
+/* ORDER SCREEN */
+.order-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--light);
+}
+.order-client-name { font-size: 18px; font-weight: 200; color: var(--black); }
+.order-event { font-size: 11px; font-weight: 300; color: var(--gray); margin-top: 2px; letter-spacing: 0.06em; }
+.order-lines { flex: 1; overflow-y: auto; }
+.order-line {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.order-line-info { flex: 1; }
+.order-line-name { font-size: 14px; font-weight: 300; color: var(--black); }
+.order-line-detail { font-size: 11px; font-weight: 300; color: var(--gray); margin-top: 2px; }
+.order-line-right { display: flex; align-items: center; gap: 12px; }
+.qty-ctrl { display: flex; align-items: center; gap: 10px; }
+.qty-btn {
+  width: 30px; height: 30px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Raleway', sans-serif;
+}
+.qty-btn.plus { background: var(--black); border-color: var(--black); color: var(--white); }
+.qty-btn:active { opacity: 0.7; }
+.qty-num { font-size: 16px; font-weight: 300; min-width: 20px; text-align: center; }
+.line-total { font-size: 14px; font-weight: 400; color: var(--black); min-width: 50px; text-align: right; }
+.delete-line { background: none; border: none; color: #ccc; cursor: pointer; font-size: 18px; padding: 0 0 0 8px; }
+
+/* ADD WINE SECTION */
+.add-wine-section {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--light);
+}
+.add-wine-title {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 12px;
+}
+.add-wine-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.add-wine-select {
+  border: none;
+  border-bottom: 1.5px solid var(--border);
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: 300;
+  background: transparent;
+  color: var(--black);
+  font-family: 'Raleway', sans-serif;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.add-wine-select:focus { outline: none; border-bottom-color: var(--black); }
+.price-display {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--gray);
+  padding: 4px 0;
+  letter-spacing: 0.06em;
+}
+
+/* ORDER TOTAL */
+.order-total {
+  padding: 16px 20px;
+  background: var(--white);
+  border-top: 2px solid var(--black);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.total-label { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); }
+.total-amount { font-size: 28px; font-weight: 200; color: var(--black); }
+.total-bottles { font-size: 12px; font-weight: 300; color: var(--gray); }
+
+/* FOOTER ACTIONS */
+.footer-actions { padding: 12px 20px 20px; display: flex; flex-direction: column; gap: 8px; }
+
+/* SUCCESS SCREEN */
+.success-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  gap: 16px;
+  text-align: center;
+}
+.success-icon { font-size: 48px; }
+.success-title { font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--success); }
+.success-detail { font-size: 14px; font-weight: 300; color: var(--gray); line-height: 1.7; }
+
+/* STOCK SCREEN */
+.stock-list { flex: 1; overflow-y: auto; }
+.stock-item {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.stock-item:active { background: var(--light); }
+.stock-item-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.stock-wine { font-size: 15px; font-weight: 300; color: var(--black); }
+.stock-status { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; padding: 3px 8px; }
+.status-ok { background: #e8f5ee; color: var(--success); }
+.status-warn { background: #fff3e0; color: #e65100; }
+.status-alert { background: #fdecea; color: #c62828; }
+.stock-detail { font-size: 12px; font-weight: 300; color: var(--gray); margin-top: 4px; }
+
+/* LOADING */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 12px;
+  flex: 1;
+}
+.loading-text { font-size: 11px; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); }
+.spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--black); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* FILTER CHIPS */
+.filter-chip {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  -webkit-appearance: none;
+}
+.filter-chip.active { background: var(--black); color: var(--white); border-color: var(--black); }
+
+/* WINE ROW */
+.wine-row {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.wine-row-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+.wine-row-name { font-size: 14px; font-weight: 300; color: var(--black); }
+.wine-row-ca { font-size: 16px; font-weight: 300; color: var(--black); }
+.wine-row-stats { display: flex; gap: 16px; margin-bottom: 8px; }
+.wine-stat { font-size: 11px; font-weight: 300; color: var(--gray); }
+.wine-stat span { font-weight: 400; color: var(--black); }
+.bar-wrap { height: 3px; background: var(--border); width: 100%; }
+.bar-fill { height: 3px; background: var(--black); transition: width 0.5s; }
+
+/* MONTH MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  align-items: flex-end;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white);
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.modal-title { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; }
+.modal-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--black);
+  color: var(--white);
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  z-index: 300;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; }
+
+/* NAME SCREEN */
+.name-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  gap: 16px;
+}
+.name-btn {
+  width: 100%;
+  padding: 18px;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  font-family: 'Raleway', sans-serif;
+  font-size: 18px;
+  font-weight: 200;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.name-btn:active { opacity: 0.8; }
+.name-btn.alt {
+  background: var(--white);
+  color: var(--black);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.divider { width: 40px; height: 1px; background: var(--border); }
+
+/* EMPTY STATE */
+.empty-state {
+  padding: 48px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.empty-icon { font-size: 32px; opacity: 0.3; }
+.empty-text { font-size: 12px; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo">Le F | L H</div>
+  </div>
+  <div class="header-right-wrap">
+    <div class="pocket-label">Pocket</div>
+    <div class="header-actions">
+      <div class="user-chip" id="user-chip" onclick="showNameScreen()">–</div>
+      <button class="settings-btn" onclick="showSetup()">⚙</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- SETUP SCREEN -->
+<div class="screen active" id="screen-setup">
+  <div class="setup-screen">
+    <div class="setup-title">Configuration</div>
+    <div class="setup-subtitle">Entrez votre Personal Access Token Airtable pour connecter l'application à votre base Le Filh.</div>
+    <input type="password" class="setup-input" id="token-input" placeholder="patxxxxxxxxxxxxxxxx" autocomplete="off">
+    <button class="btn btn-black" onclick="saveToken()">Connexion</button>
+    <div class="setup-subtitle" style="font-size:11px">Le token est stocké uniquement sur cet appareil.</div>
+  </div>
+</div>
+
+<!-- NAME SCREEN -->
+<div class="screen" id="screen-name">
+  <div class="name-screen">
+    <div class="setup-title">Qui êtes-vous ?</div>
+    <div class="setup-subtitle">Votre prénom apparaîtra sur chaque commande.</div>
+    <button class="name-btn" onclick="setUser('Cécile')">Cécile</button>
+    <button class="name-btn" onclick="setUser('Patrick')">Patrick</button>
+    <div class="divider"></div>
+    <button class="name-btn alt" onclick="setUser('Autre')">Autre</button>
+  </div>
+</div>
+
+<!-- HOME SCREEN -->
+<div class="screen" id="screen-home">
+
+  <!-- Dashboard header -->
+  <div style="padding: 16px 20px 0;">
+    <div style="font-size:10px; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:var(--gray); margin-bottom:4px;" id="dash-period-label">Année 2026</div>
+
+    <!-- KPI strip -->
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; border:1px solid var(--border); margin-bottom:12px;">
+      <div style="padding:14px 10px; text-align:center; border-right:1px solid var(--border);">
+        <div id="kpi-ca" style="font-size:20px; font-weight:200; color:var(--black);">–</div>
+        <div style="font-size:9px; font-weight:400; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray); margin-top:2px;">CA €</div>
+      </div>
+      <div style="padding:14px 10px; text-align:center; border-right:1px solid var(--border);">
+        <div id="kpi-btl" style="font-size:20px; font-weight:200; color:var(--black);">–</div>
+        <div style="font-size:9px; font-weight:400; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray); margin-top:2px;">Bouteilles</div>
+      </div>
+      <div style="padding:14px 10px; text-align:center;">
+        <div id="kpi-clients" style="font-size:20px; font-weight:200; color:var(--black);">–</div>
+        <div style="font-size:9px; font-weight:400; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray); margin-top:2px;">Clients</div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div style="display:flex; gap:8px; margin-bottom:12px; overflow-x:auto; padding-bottom:4px;">
+      <button id="filter-all" class="filter-chip active" onclick="applyFilter('all')">Tout 2026</button>
+      <button id="filter-month" class="filter-chip" onclick="showMonthPicker()">Par mois</button>
+      <select id="filter-event-sel" class="filter-chip" onchange="applyFilter('event', this.value)" style="cursor:pointer;">
+        <option value="">Par événement</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Wine breakdown -->
+  <div style="flex:1; overflow-y:auto; padding: 0 20px 100px;" id="wine-breakdown">
+    <div class="loading"><div class="spinner"></div><div class="loading-text">Chargement…</div></div>
+  </div>
+
+  <!-- FAB nouvelle vente -->
+  <div style="position:fixed; bottom:20px; left:50%; transform:translateX(-50%); width:calc(100% - 40px); max-width:440px; z-index:50;">
+    <button class="btn btn-black" onclick="goTo('customers')" style="box-shadow:0 4px 16px rgba(0,0,0,0.2);">
+      + Nouvelle vente
+    </button>
+    <div style="display:flex; gap:8px; margin-top:8px;">
+      <button class="btn btn-outline" onclick="goTo('stock')" style="flex:1; padding:10px; font-size:10px;">📦 Stock</button>
+      <button class="btn btn-outline" onclick="goTo('export')" style="flex:1; padding:10px; font-size:10px;">⬇ Export CSV</button>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOMERS SCREEN -->
+<div class="screen" id="screen-customers">
+  <div class="screen-header">
+    <button class="back-btn" onclick="goTo('home')">←</button>
+    <div class="screen-title">Sélectionner un client</div>
+  </div>
+  <div style="padding: 10px 20px; border-bottom: 1px solid var(--border);">
+    <button class="btn btn-black" onclick="showNewCustomerModal()" style="padding:12px;">+ Nouveau client</button>
+  </div>
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="customer-search" placeholder="Rechercher un client existant…" oninput="filterCustomers()" autocomplete="off">
+  </div>
+  <div id="customer-list-container" class="customer-list"></div>
+</div>
+
+<!-- NEW CUSTOMER MODAL -->
+<div class="modal-overlay" id="modal-new-customer">
+  <div class="modal">
+    <div class="modal-title">Nouveau client</div>
+    <div class="modal-row2">
+      <div class="field"><label>Nom</label><input type="text" id="nc-nom" placeholder="Dupont" autocapitalize="words"></div>
+      <div class="field"><label>Prénom</label><input type="text" id="nc-prenom" placeholder="Marie" autocapitalize="words"></div>
+    </div>
+    <div class="field"><label>Téléphone</label><input type="tel" id="nc-tel" placeholder="06 12 34 56 78"></div>
+    <div class="field"><label>Email</label><input type="email" id="nc-email" placeholder="marie@exemple.fr" autocapitalize="none"></div>
+    <button class="btn btn-black" onclick="createCustomer()">Créer et continuer →</button>
+    <button class="btn btn-outline" onclick="closeModal('modal-new-customer')">Annuler</button>
+  </div>
+</div>
+
+<!-- ORDER SCREEN -->
+<div class="screen" id="screen-order">
+  <div class="screen-header">
+    <button class="back-btn" onclick="goTo('customers')">←</button>
+    <div class="screen-title">Commande</div>
+  </div>
+  <div class="order-header">
+    <div class="order-client-name" id="order-client-name">–</div>
+    <div class="order-event" id="order-event-name">–</div>
+  </div>
+
+  <!-- Event selector -->
+  <div style="padding: 12px 20px; border-bottom: 1px solid var(--border);">
+    <div class="field">
+      <label>Événement</label>
+      <select id="event-select" onchange="onEventChange()" class="add-wine-select" style="width:100%">
+        <option value="">Sélectionner…</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Add wine section -->
+  <div class="add-wine-section">
+    <div class="add-wine-title">Ajouter un vin</div>
+    <div class="add-wine-row">
+      <div class="field">
+        <label>Vin</label>
+        <select id="wine-select" onchange="onWineChange()" class="add-wine-select">
+          <option value="">Sélectionner…</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Millésime</label>
+        <select id="vintage-select" onchange="onVintageChange()" class="add-wine-select">
+          <option value="">–</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:flex; gap:12px; align-items:flex-end;">
+      <div class="price-display" id="price-display">Prix : –</div>
+      <div style="flex:1"></div>
+      <button class="btn btn-black" style="width:auto; padding: 10px 20px;" onclick="addLineToOrder()">+ Ajouter</button>
+    </div>
+  </div>
+
+  <!-- Order lines -->
+  <div class="order-lines" id="order-lines-container">
+    <div class="empty-state">
+      <div class="empty-icon">🍷</div>
+      <div class="empty-text">Aucun vin ajouté</div>
+    </div>
+  </div>
+
+  <!-- Total -->
+  <div class="order-total">
+    <div>
+      <div class="total-label">Total</div>
+      <div class="total-bottles" id="total-bottles">0 bouteille</div>
+    </div>
+    <div class="total-amount" id="total-amount">0 €</div>
+  </div>
+
+  <div class="footer-actions">
+    <button class="btn btn-success" onclick="saveOrder()" id="save-order-btn">Valider et enregistrer</button>
+    <button class="btn btn-outline" onclick="goTo('home')">Annuler</button>
+  </div>
+</div>
+
+<!-- ORDERS LIST SCREEN -->
+<div class="screen" id="screen-orders-list">
+  <div class="screen-header">
+    <button class="back-btn" onclick="goTo('home')">←</button>
+    <div class="screen-title">Commandes</div>
+  </div>
+  <div id="orders-list-container" class="customer-list"></div>
+</div>
+
+<!-- STOCK SCREEN -->
+<div class="screen" id="screen-stock">
+  <div class="screen-header">
+    <button class="back-btn" onclick="goTo('home')">←</button>
+    <div class="screen-title">Contrôle Stock</div>
+  </div>
+
+  <!-- 3 onglets -->
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; padding:10px 12px; border-bottom:1px solid var(--border);">
+    <button id="tab-bc"  class="btn btn-black"  onclick="switchStockTab('bc')"  style="padding:10px; font-size:9px; letter-spacing:0.08em;">Bordeaux Connect</button>
+    <button id="tab-inv" class="btn btn-outline" onclick="switchStockTab('inv')" style="padding:10px; font-size:9px; letter-spacing:0.08em;">Inventaire</button>
+    <button id="tab-crd" class="btn btn-outline" onclick="switchStockTab('crd')" style="padding:10px; font-size:9px; letter-spacing:0.08em;">CRD</button>
+  </div>
+
+  <!-- BORDEAUX CONNECT SECTION -->
+  <div id="section-bc">
+    <div id="bc-container" class="stock-list"></div>
+    <div style="padding:12px 20px 80px; display:flex; flex-direction:column; gap:8px;">
+      <button class="btn btn-black" onclick="showNewBCModal()" style="padding:14px;">+ Saisir stock BC du mois</button>
+      <button class="btn btn-outline" onclick="showInitBCModal()" style="padding:12px; font-size:10px;">⚙ Initialiser stock de départ</button>
+    </div>
+  </div>
+
+  <!-- INVENTAIRE PHYSIQUE SECTION -->
+  <div id="section-inv" style="display:none;">
+    <div id="inv-container" class="stock-list"></div>
+    <div style="padding:12px 20px 80px;">
+      <button class="btn btn-black" onclick="showNewInvModal()" style="padding:14px;">+ Saisir inventaire physique</button>
+    </div>
+  </div>
+
+  <!-- CRD SECTION -->
+  <div id="section-crd" style="display:none;">
+    <div style="padding:12px 20px; border-bottom:1px solid var(--border); display:flex; gap:8px; justify-content:flex-end;">
+      <button id="btn-crd-detail" class="btn btn-black"  onclick="setCRDView('detail')" style="padding:8px 12px; font-size:10px;">Détail</button>
+      <button id="btn-crd-edms"   class="btn btn-outline" onclick="setCRDView('edms')"   style="padding:8px 12px; font-size:10px;">Vue eDMS</button>
+    </div>
+    <div id="crd-container" class="stock-list"></div>
+    <div style="padding:12px 20px 80px;">
+      <button class="btn btn-black" onclick="showNewCRDModal()" style="padding:14px;">+ Saisir un mois CRD</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL INIT BC -->
+<div class="modal-overlay" id="modal-init-bc">
+  <div class="modal">
+    <div class="modal-title">Stock initial Bordeaux Connect</div>
+    <div style="font-size:12px; font-weight:300; color:var(--gray);">Saisir les stocks officiels BC à une date de référence (ex: fin avril 2026)</div>
+    <div class="field"><label>Mois de référence</label><input type="month" id="ibc-mois"></div>
+    <div style="font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray); margin:4px 0 2px;">Stocks en HL</div>
+    <div class="modal-row2">
+      <div class="field"><label>LOU1 – Loupiac</label><input type="number" step="0.01" id="ibc-lou1" placeholder="12.21"></div>
+      <div class="field"><label>PBX2 – Cadillac CDdB</label><input type="number" step="0.01" id="ibc-pbx2" placeholder="59.68"></div>
+    </div>
+    <div class="modal-row2">
+      <div class="field"><label>CAD1 – Cadillac</label><input type="number" step="0.01" id="ibc-cad1" placeholder="38.70"></div>
+      <div class="field"><label>BOR3 – Rosé</label><input type="number" step="0.01" id="ibc-bor3" placeholder="9.99"></div>
+    </div>
+    <div class="field"><label>BOR1 – Bordeaux Blanc</label><input type="number" step="0.01" id="ibc-bor1" placeholder="18.83"></div>
+    <button class="btn btn-black" onclick="saveInitBC()">Enregistrer les stocks initiaux</button>
+    <button class="btn btn-outline" onclick="closeModal('modal-init-bc')">Annuler</button>
+  </div>
+</div>
+
+<!-- MODAL SAISIE BC MENSUEL -->
+<div class="modal-overlay" id="modal-new-bc">
+  <div class="modal">
+    <div class="modal-title">Déclaration Bordeaux Connect</div>
+    <div class="field"><label>Mois</label><input type="month" id="nbc-mois"></div>
+    <div class="field">
+      <label>Appellation</label>
+      <select id="nbc-code" onchange="updateBCPreview()">
+        <option value="">Sélectionner…</option>
+        <option value="LOU1">LOU1 – Loupiac (Blanc)</option>
+        <option value="PBX2">PBX2 – Côtes de Bordeaux Cadillac</option>
+        <option value="CAD1">CAD1 – Cadillac (Blanc)</option>
+        <option value="BOR3">BOR3 – Bordeaux Rosé et clairet</option>
+        <option value="BOR1">BOR1 – Bordeaux Blanc</option>
+      </select>
+    </div>
+    <div class="field"><label>Stock début de mois (HL) — depuis BC</label><input type="number" step="0.001" id="nbc-debut" placeholder="0.000" oninput="updateBCPreview()"></div>
+    <div class="field"><label>Entrées (HL) — achats vrac, DCA…</label><input type="number" step="0.001" id="nbc-entrees" placeholder="0.000" oninput="updateBCPreview()"></div>
+    <div class="field"><label>Distillerie (HL)</label><input type="number" step="0.001" id="nbc-distil" placeholder="0.000" oninput="updateBCPreview()"></div>
+    <div class="field"><label>Autres sorties (HL)</label><input type="number" step="0.001" id="nbc-autres" placeholder="0.000" oninput="updateBCPreview()"></div>
+    <div id="nbc-preview" style="background:#fff8e0; padding:10px 12px; font-size:12px; font-weight:300; color:#7a5a00; border-radius:2px; min-height:32px;"></div>
+    <div class="field"><label>Stock déclaré dans BC après saisie (HL)</label><input type="number" step="0.001" id="nbc-declare" placeholder="0.000"></div>
+    <div class="field"><label>Note</label><input type="text" id="nbc-note" placeholder="Optionnel"></div>
+    <button class="btn btn-black" onclick="saveBC()">Enregistrer</button>
+    <button class="btn btn-outline" onclick="closeModal('modal-new-bc')">Annuler</button>
+  </div>
+</div>
+
+<!-- MODAL INVENTAIRE PHYSIQUE -->
+<div class="modal-overlay" id="modal-new-inv">
+  <div class="modal">
+    <div class="modal-title">Inventaire physique</div>
+    <div class="field"><label>Mois</label><input type="month" id="ninv-mois"></div>
+    <div style="font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray); margin:4px 0 2px;">Bouteilles comptées par millésime</div>
+    <div id="ninv-vintages" style="display:flex; flex-direction:column; gap:10px;"></div>
+    <div class="field"><label>Note</label><input type="text" id="ninv-note" placeholder="Optionnel"></div>
+    <button class="btn btn-black" onclick="saveInv()">Enregistrer</button>
+    <button class="btn btn-outline" onclick="closeModal('modal-new-inv')">Annuler</button>
+  </div>
+</div>
+
+<!-- NEW CRD MODAL -->
+<div class="modal-overlay" id="modal-new-crd">
+  <div class="modal">
+    <div class="modal-title">Saisie CRD mensuel</div>
+    <div class="field">
+      <label>Mois</label>
+      <input type="month" id="crd-mois">
+    </div>
+    <div class="field">
+      <label>Type de capsule</label>
+      <select id="crd-type">
+        <option value="">Sélectionner…</option>
+        <option value="Noire">🖤 Noire — Loupiac + Cadillac CDdB</option>
+        <option value="Transparente">⬜ Transparente — Rosé + Sec</option>
+      </select>
+    </div>
+    <div class="modal-row2">
+      <div class="field"><label>Stock début</label><input type="number" id="crd-debut" placeholder="0" min="0"></div>
+      <div class="field"><label>Entrées (achat)</label><input type="number" id="crd-entrees" placeholder="0" min="0"></div>
+    </div>
+    <div class="modal-row2">
+      <div class="field"><label>Posées (= btl)</label><input type="number" id="crd-posees" placeholder="0" min="0"></div>
+      <div class="field"><label>Casse / inutilisables</label><input type="number" id="crd-casse" placeholder="0" min="0"></div>
+    </div>
+    <div class="field"><label>Stock boîte (comptage physique)</label><input type="number" id="crd-boite" placeholder="0" min="0"></div>
+    <div id="crd-calc-preview" style="background:var(--light); padding:10px 12px; font-size:12px; font-weight:300; color:var(--gray); min-height:32px; border-radius:2px;"></div>
+    <div class="field"><label>Fournisseur</label><input type="text" id="crd-fournisseur" placeholder="Ex: Amcor, Vinventions…"></div>
+    <div class="field"><label>Note</label><input type="text" id="crd-note" placeholder="Optionnel"></div>
+    <button class="btn btn-black" onclick="saveCRDRecord()">Enregistrer</button>
+    <button class="btn btn-outline" onclick="closeModal('modal-new-crd')">Annuler</button>
+  </div>
+</div>
+
+<!-- NEW STOCK MODAL -->
+<div class="modal-overlay" id="modal-new-stock">
+  <div class="modal">
+    <div class="modal-title">Saisie stock mensuel</div>
+    <div class="field">
+      <label>Mois</label>
+      <input type="month" id="ns-mois">
+    </div>
+    <div class="field">
+      <label>Appellation</label>
+      <select id="ns-appellation">
+        <option value="">Sélectionner…</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Millésime</label>
+      <select id="ns-millesime">
+        <option value="">Sélectionner…</option>
+      </select>
+    </div>
+    <div class="modal-row2">
+      <div class="field"><label>Stock début (btl)</label><input type="number" id="ns-stock-debut" placeholder="0"></div>
+      <div class="field"><label>Entrées (btl)</label><input type="number" id="ns-entrees" placeholder="0"></div>
+    </div>
+    <div class="modal-row2">
+      <div class="field"><label>Ventes (btl)</label><input type="number" id="ns-ventes" placeholder="0"></div>
+      <div class="field"><label>Offerts/Dégustation</label><input type="number" id="ns-offerts" placeholder="0"></div>
+    </div>
+    <div class="modal-row2">
+      <div class="field"><label>Autres sorties</label><input type="number" id="ns-autres" placeholder="0"></div>
+      <div class="field"><label>Stock déclaré eDMS</label><input type="number" id="ns-edms" placeholder="0"></div>
+    </div>
+    <div class="field"><label>Note / Justification</label><input type="text" id="ns-note" placeholder="Optionnel"></div>
+    <button class="btn btn-black" onclick="saveStockRecord()">Enregistrer</button>
+    <button class="btn btn-outline" onclick="closeModal('modal-new-stock')">Annuler</button>
+  </div>
+</div>
+
+<!-- SUCCESS SCREEN -->
+<div class="screen" id="screen-success">
+  <div style="padding: 32px 24px; display:flex; flex-direction:column; gap:20px; max-width:480px; margin:0 auto; width:100%;">
+
+    <!-- Confirmation -->
+    <div style="text-align:center; padding: 24px 0 8px;">
+      <div style="font-size: 44px; margin-bottom:12px;">✓</div>
+      <div style="font-size:11px; font-weight:500; letter-spacing:0.22em; text-transform:uppercase; color:var(--success);">Commande enregistrée</div>
+      <div id="success-detail" style="margin-top:10px; font-size:14px; font-weight:300; color:var(--gray); line-height:1.7;"></div>
+    </div>
+
+    <!-- Paiement -->
+    <div>
+      <div style="font-size:10px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--gray); margin-bottom:10px;">💳 Mode de paiement</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+        <button id="pay-cb"   class="btn btn-outline" style="padding:12px 8px; font-size:13px;" onclick="setPayment('CB')">CB</button>
+        <button id="pay-cash" class="btn btn-outline" style="padding:12px 8px; font-size:13px;" onclick="setPayment('Cash')">Cash</button>
+        <button id="pay-chq"  class="btn btn-outline" style="padding:12px 8px; font-size:13px;" onclick="setPayment('Chèque')">Chèque</button>
+      </div>
+      <div id="payment-status" style="margin-top:8px; font-size:11px; font-weight:300; color:var(--success); text-align:center; min-height:16px;"></div>
+    </div>
+
+    <!-- Email récap -->
+    <div style="border-top:1px solid var(--border); padding-top:20px;">
+      <div style="font-size:10px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--gray); margin-bottom:10px;">✉ Récapitulatif client</div>
+      <div id="client-email-display" style="font-size:13px; font-weight:300; color:var(--black); margin-bottom:12px; padding:8px 0; border-bottom:1px solid var(--border);"></div>
+      <button class="btn btn-black" onclick="sendRecapEmail()" id="send-email-btn">Envoyer le récap par email</button>
+      <div id="email-status" style="margin-top:8px; font-size:11px; font-weight:300; color:var(--success); text-align:center; min-height:16px;"></div>
+    </div>
+
+    <!-- Actions suivantes -->
+    <div style="display:flex; flex-direction:column; gap:8px; padding-top:4px;">
+      <button class="btn btn-outline" onclick="goTo('customers')">Nouvelle vente</button>
+      <button class="btn btn-outline" onclick="goTo('home')" style="color:var(--gray); font-size:10px;">Accueil</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────────────
+const BASE_ID = 'appLDKiDVRonaPVSe';
+let TOKEN = localStorage.getItem('filh_token') || '';
+let currentUser = localStorage.getItem('filh_user') || '';
+
+// ─── STATE ────────────────────────────────────────────────────────
+let allCustomers = [];
+let allWines = [];
+let allVintages = [];
+let allEvents = [];
+let allPriceLists = [];
+let allStockRecords = [];
+let allCRDRecords = [];
+
+let allStockBC = [];
+let allInventaire = [];
+
+// Bordeaux Connect codes mapping
+const BC_CODES = {
+  'LOU1': { label: 'Loupiac (Blanc)', color: '#f5e6c0', bar: '#c9952a' },
+  'PBX2': { label: 'Côtes de Bordeaux Cadillac', color: '#f5d0d0', bar: '#c04040' },
+  'CAD1': { label: 'Cadillac (Blanc)', color: '#fde8d0', bar: '#c07030' },
+  'BOR3': { label: 'Bordeaux Rosé et clairet', color: '#f9d0dc', bar: '#e07090' },
+  'BOR1': { label: 'Bordeaux (Blanc)', color: '#d4edd8', bar: '#5aaa6a' },
+};
+
+let selectedCustomer = null;
+let selectedEvent = null;
+let orderLines = [];
+let lastOrderSummary = { customerName: '', customerEmail: '', lines: [], totalEur: 0, totalBtl: 0, eventName: '' };
+let selectedPayment = null;
+
+// ─── INIT ─────────────────────────────────────────────────────────
+function init() {
+  // Detect file:// protocol
+  if (window.location.protocol === 'file:') {
+    document.body.innerHTML = `
+      <div style="font-family:'Raleway',sans-serif; font-weight:300; padding:32px 24px; max-width:480px; margin:0 auto;">
+        <div style="font-size:11px; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:#c04040; margin-bottom:16px;">⚠ Application non accessible en local</div>
+        <p style="font-size:14px; font-weight:300; line-height:1.7; color:#333; margin-bottom:20px;">
+          Cette app appelle Airtable via internet — le navigateur bloque ces requêtes quand le fichier est ouvert depuis votre disque dur.
+        </p>
+        <div style="background:#f5f5f5; padding:16px; margin-bottom:20px;">
+          <div style="font-size:10px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:#888; margin-bottom:10px;">Solution recommandée — Netlify Drop</div>
+          <ol style="font-size:13px; font-weight:300; color:#333; line-height:2; padding-left:18px;">
+            <li>Allez sur <a href="https://app.netlify.com/drop" target="_blank" style="color:#111; font-weight:400;">app.netlify.com/drop</a></li>
+            <li>Glissez-déposez ce fichier HTML dans la zone</li>
+            <li>Netlify génère une URL HTTPS permanente</li>
+            <li>Ouvrez cette URL depuis votre téléphone ou ordinateur</li>
+          </ol>
+        </div>
+        <div style="background:#f5f5f5; padding:16px;">
+          <div style="font-size:10px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:#888; margin-bottom:10px;">Alternative — Serveur local</div>
+          <div style="font-size:12px; font-weight:300; color:#555; line-height:1.7;">
+            Dans votre dossier Downloads, ouvrez un terminal et tapez :<br>
+            <code style="background:#e8e8e8; padding:2px 6px; font-size:12px;">python -m http.server 8000</code><br>
+            Puis ouvrez : <code style="background:#e8e8e8; padding:2px 6px; font-size:12px;">localhost:8000/lefilh-pocket.html</code>
+          </div>
+        </div>
+      </div>`;
+    return;
+  }
+  if (!TOKEN) { showScreen('setup'); return; }
+  if (!currentUser) { showScreen('name'); return; }
+  document.getElementById('user-chip').textContent = currentUser;
+  showScreen('home');
+  loadAllData();
+}
+
+// ─── AIRTABLE API ─────────────────────────────────────────────────
+function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+async function airtable(table, params = '') {
+  const baseUrl = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(table)}${params}`;
+
+  async function fetchAirtable(url, attempt = 1) {
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${TOKEN}` } });
+
+    // Airtable peut renvoyer 429 si trop de requêtes : on attend puis on réessaie.
+    if (res.status === 429 && attempt <= 4) {
+      await sleep(1000 * attempt);
+      return fetchAirtable(url, attempt + 1);
+    }
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`Airtable ${res.status} sur table "${table}" : ${errorText.substring(0, 180)}`);
+    }
+
+    return await res.json();
+  }
+
+  const data = await fetchAirtable(baseUrl);
+  let records = data.records || [];
+  let offset = data.offset;
+
+  while (offset) {
+    await sleep(500);
+    const separator = baseUrl.includes('?') ? '&' : '?';
+    const d2 = await fetchAirtable(`${baseUrl}${separator}offset=${offset}`);
+    records = [...records, ...(d2.records || [])];
+    offset = d2.offset;
+  }
+
+  return records;
+}
+
+async function airtablePost(table, fields) {
+  const res = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(table)}`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${TOKEN}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fields })
+  });
+  if (!res.ok) { const e = await res.json(); throw new Error(JSON.stringify(e)); }
+  return await res.json();
+}
+
+let isLoadingData = false;
+async function loadAllData() {
+  if (isLoadingData) return;
+  isLoadingData = true;
+  try {
+    const customers  = await airtable('Customers');          await sleep(500);
+    const wines      = await airtable('Wines');              await sleep(500);
+    const vintages   = await airtable('Wine Vintage');       await sleep(500);
+    const events     = await airtable('Events');             await sleep(500);
+    const priceLists = await airtable('Price Lists');        await sleep(500);
+    const stocks     = await airtable('Stock Mensuel');      await sleep(500);
+    const crds       = await airtable('CRD');                await sleep(500);
+    const stockBC    = await airtable('Stock_BC');           await sleep(500);
+    const inventaire = await airtable('Inventaire_Physique');
+
+    allCustomers    = customers;
+    allWines        = wines;
+    allVintages     = vintages;
+    allEvents       = events;
+    allPriceLists   = priceLists;
+    allStockRecords = stocks;
+    allCRDRecords   = crds;
+    allStockBC      = stockBC;
+    allInventaire   = inventaire;
+
+    populateEventSelect();
+    populateWineSelect();
+    populateStockModals();
+    await loadDashboardData();
+  } catch(e) {
+    showToast('Erreur Airtable : ' + (e.message || '').substring(0, 50));
+    console.error(e);
+  } finally {
+    isLoadingData = false;
+  }
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const s = document.getElementById('screen-' + name);
+  if (s) s.classList.add('active');
+}
+
+function goTo(name) {
+  if (name === 'home') { showScreen('home'); if (allOrderLines.length > 0) renderDashboard(); return; }
+  if (name === 'customers') { renderCustomerList(''); document.getElementById('customer-search').value = ''; showScreen('customers'); return; }
+  if (name === 'orders-list') { loadOrdersList(); showScreen('orders-list'); return; }
+  if (name === 'stock') { showScreen('stock'); switchStockTab('bc'); return; }
+  if (name === 'export') { exportCSV(); return; }
+  showScreen(name);
+}
+
+// ─── SETUP ────────────────────────────────────────────────────────
+function saveToken() {
+  const t = document.getElementById('token-input').value.trim();
+  if (!t) { showToast('Token requis'); return; }
+  TOKEN = t;
+  localStorage.setItem('filh_token', t);
+  if (!currentUser) { showScreen('name'); return; }
+  showScreen('home');
+  loadAllData();
+}
+
+function showSetup() {
+  document.getElementById('token-input').value = TOKEN;
+  showScreen('setup');
+}
+
+function setUser(name) {
+  currentUser = name;
+  localStorage.setItem('filh_user', name);
+  document.getElementById('user-chip').textContent = name;
+  showScreen('home');
+  if (allCustomers.length === 0) loadAllData();
+}
+
+function showNameScreen() { showScreen('name'); }
+
+// ─── CUSTOMERS ────────────────────────────────────────────────────
+function renderCustomerList(query) {
+  const container = document.getElementById('customer-list-container');
+  let list = allCustomers;
+  if (query) {
+    const q = query.toLowerCase();
+    list = list.filter(c => {
+      const name = (c.fields['Customer name'] || '').toLowerCase();
+      const email = (c.fields['Email'] || '').toLowerCase();
+      return name.includes(q) || email.includes(q);
+    });
+  }
+  if (list.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">👤</div><div class="empty-text">Aucun client trouvé</div></div>`;
+    return;
+  }
+  container.innerHTML = list.map(c => `
+    <div class="customer-item" onclick="selectCustomer('${c.id}')">
+      <div>
+        <div class="customer-name">${c.fields['Customer name'] || '–'}</div>
+        <div class="customer-email">${c.fields['Email'] || ''}</div>
+      </div>
+      <div class="customer-arrow">›</div>
+    </div>`).join('');
+}
+
+function filterCustomers() {
+  const q = document.getElementById('customer-search').value;
+  renderCustomerList(q);
+}
+
+function selectCustomer(id) {
+  selectedCustomer = allCustomers.find(c => c.id === id);
+  if (!selectedCustomer) return;
+  document.getElementById('order-client-name').textContent = selectedCustomer.fields['Customer name'] || '–';
+  orderLines = [];
+  renderOrderLines();
+  updateTotal();
+  showScreen('order');
+}
+
+async function createCustomer() {
+  const nom = document.getElementById('nc-nom').value.trim();
+  const prenom = document.getElementById('nc-prenom').value.trim();
+  if (!nom && !prenom) { showToast('Nom ou prénom requis'); return; }
+  const fields = {
+    'Customer name': `${prenom} ${nom}`.trim(),
+  };
+  if (document.getElementById('nc-tel').value) fields['Phone'] = document.getElementById('nc-tel').value;
+  if (document.getElementById('nc-email').value) fields['Email'] = document.getElementById('nc-email').value;
+  try {
+    const rec = await airtablePost('Customers', fields);
+    allCustomers.unshift(rec);
+    closeModal('modal-new-customer');
+    ['nc-nom','nc-prenom','nc-tel','nc-email'].forEach(id => document.getElementById(id).value = '');
+    selectCustomer(rec.id);
+  } catch(e) {
+    showToast('Erreur création client');
+    console.error(e);
+  }
+}
+
+function showNewCustomerModal() { openModal('modal-new-customer'); }
+
+// ─── EVENT & WINE SELECTS ─────────────────────────────────────────
+function populateEventSelect() {
+  const sel = document.getElementById('event-select');
+  sel.innerHTML = '<option value="">Sélectionner un événement…</option>';
+  allEvents.forEach(e => {
+    const opt = document.createElement('option');
+    opt.value = e.id;
+    opt.textContent = e.fields['Name'] || e.fields['Event name'] || e.id;
+    sel.appendChild(opt);
+  });
+}
+
+function onEventChange() {
+  const eventId = document.getElementById('event-select').value;
+  selectedEvent = allEvents.find(e => e.id === eventId) || null;
+  const name = selectedEvent ? (selectedEvent.fields['Name'] || selectedEvent.fields['Event name'] || '') : '–';
+  document.getElementById('order-event-name').textContent = name;
+  updatePriceDisplay();
+}
+
+function populateWineSelect() {
+  const sel = document.getElementById('wine-select');
+  sel.innerHTML = '<option value="">Sélectionner un vin…</option>';
+  allWines.forEach(w => {
+    const opt = document.createElement('option');
+    opt.value = w.id;
+    opt.textContent = w.fields['Name'] || w.fields['Wine name'] || w.id;
+    sel.appendChild(opt);
+  });
+}
+
+function onWineChange() {
+  const wineId = document.getElementById('wine-select').value;
+  const vinSel = document.getElementById('vintage-select');
+  vinSel.innerHTML = '<option value="">–</option>';
+  if (!wineId) { updatePriceDisplay(); return; }
+  const vintages = allVintages.filter(v => {
+    const wines = v.fields['Wine'] || v.fields['Wines'] || [];
+    return wines.includes(wineId);
+  });
+  vintages.forEach(v => {
+    const opt = document.createElement('option');
+    opt.value = v.id;
+    opt.textContent = v.fields['Vintage'] || v.fields['Year'] || v.fields['Millésime'] || v.id;
+    vinSel.appendChild(opt);
+  });
+  if (vintages.length === 1) { vinSel.value = vintages[0].id; onVintageChange(); }
+  else updatePriceDisplay();
+}
+
+function onVintageChange() { updatePriceDisplay(); }
+
+function getPrice(vintageId, eventId) {
+  if (!vintageId || !eventId) return null;
+  const event = allEvents.find(e => e.id === eventId);
+  if (!event) return null;
+  const priceLists = event.fields['Price Lists'] || event.fields['Price List'] || [];
+  for (const plId of priceLists) {
+    const pl = allPriceLists.find(p => p.id === plId);
+    if (!pl) continue;
+    const plVintages = pl.fields['Wine Vintages'] || pl.fields['Wine Vintage'] || [];
+    if (plVintages.includes(vintageId)) {
+      return { price: pl.fields['Unit price'] || pl.fields['Price'] || 0, plId };
+    }
+  }
+  return null;
+}
+
+function updatePriceDisplay() {
+  const vintageId = document.getElementById('vintage-select').value;
+  const eventId = document.getElementById('event-select').value;
+  const display = document.getElementById('price-display');
+  if (!vintageId || !eventId) { display.textContent = 'Prix : –'; return; }
+  const result = getPrice(vintageId, eventId);
+  display.textContent = result ? `Prix : ${result.price} €` : 'Prix non trouvé';
+}
+
+function addLineToOrder() {
+  const wineId = document.getElementById('wine-select').value;
+  const vintageId = document.getElementById('vintage-select').value;
+  const eventId = document.getElementById('event-select').value;
+  if (!wineId || !vintageId) { showToast('Sélectionner un vin et un millésime'); return; }
+  if (!eventId) { showToast('Sélectionner un événement'); return; }
+  const wine = allWines.find(w => w.id === wineId);
+  const vintage = allVintages.find(v => v.id === vintageId);
+  const priceResult = getPrice(vintageId, eventId);
+  const price = priceResult ? priceResult.price : 0;
+  const plId = priceResult ? priceResult.plId : null;
+  // Check if already in order
+  const existing = orderLines.find(l => l.vintageId === vintageId);
+  if (existing) { existing.qty++; }
+  else {
+    orderLines.push({
+      vintageId,
+      wineName: wine ? (wine.fields['Name'] || wine.fields['Wine name'] || '') : '',
+      vintageName: vintage ? (vintage.fields['Vintage'] || vintage.fields['Year'] || vintage.fields['Millésime'] || '') : '',
+      qty: 1,
+      price,
+      plId
+    });
+  }
+  renderOrderLines();
+  updateTotal();
+  // Reset selects
+  document.getElementById('wine-select').value = '';
+  document.getElementById('vintage-select').innerHTML = '<option value="">–</option>';
+  document.getElementById('price-display').textContent = 'Prix : –';
+}
+
+function renderOrderLines() {
+  const container = document.getElementById('order-lines-container');
+  if (orderLines.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">🍷</div><div class="empty-text">Aucun vin ajouté</div></div>`;
+    return;
+  }
+  container.innerHTML = orderLines.map((l, i) => `
+    <div class="order-line">
+      <div class="order-line-info">
+        <div class="order-line-name">${l.wineName}</div>
+        <div class="order-line-detail">${l.vintageName} · ${l.price} € / btl</div>
+      </div>
+      <div class="order-line-right">
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(${i}, -1)">−</button>
+          <span class="qty-num">${l.qty}</span>
+          <button class="qty-btn plus" onclick="changeQty(${i}, 1)">+</button>
+        </div>
+        <div class="line-total">${(l.qty * l.price).toFixed(2)} €</div>
+        <button class="delete-line" onclick="removeLine(${i})">×</button>
+      </div>
+    </div>`).join('');
+}
+
+function changeQty(i, delta) {
+  orderLines[i].qty = Math.max(1, orderLines[i].qty + delta);
+  renderOrderLines();
+  updateTotal();
+}
+
+function removeLine(i) {
+  orderLines.splice(i, 1);
+  renderOrderLines();
+  updateTotal();
+}
+
+function updateTotal() {
+  const totalBtl = orderLines.reduce((a, l) => a + l.qty, 0);
+  const totalEur = orderLines.reduce((a, l) => a + l.qty * l.price, 0);
+  document.getElementById('total-bottles').textContent = `${totalBtl} bouteille${totalBtl > 1 ? 's' : ''}`;
+  document.getElementById('total-amount').textContent = `${totalEur.toFixed(2)} €`;
+}
+
+// ─── SAVE ORDER ───────────────────────────────────────────────────
+async function saveOrder() {
+  if (!selectedCustomer) { showToast('Aucun client sélectionné'); return; }
+  if (orderLines.length === 0) { showToast('Aucun vin dans la commande'); return; }
+  if (!selectedEvent) { showToast('Sélectionner un événement'); return; }
+  const btn = document.getElementById('save-order-btn');
+  btn.textContent = 'Enregistrement…';
+  btn.disabled = true;
+  try {
+    // 1. Create Order
+    const orderFields = {
+      'Customer': [selectedCustomer.id],
+      'Sales event': [selectedEvent.id],
+      'Order Date': new Date().toISOString().split('T')[0],
+    };
+    const order = await airtablePost('Orders', orderFields);
+    // 2. Create Order Lines
+    for (const line of orderLines) {
+      const lineFields = {
+        'Order': [order.id],
+        'Millésime': [line.vintageId],
+        'Quantity': line.qty,
+        'Line type': 'Sale',
+      };
+      if (line.plId) lineFields['Bottle price'] = [line.plId];
+      await airtablePost('Order Lines', lineFields);
+    }
+    // Show success
+    const totalEur = orderLines.reduce((a, l) => a + l.qty * l.price, 0);
+    const totalBtl = orderLines.reduce((a, l) => a + l.qty, 0);
+    const customerName = selectedCustomer.fields['Customer name'] || '–';
+    const customerEmail = selectedCustomer.fields['Email'] || '';
+    const eventName = selectedEvent ? (selectedEvent.fields['Name'] || selectedEvent.fields['Event name'] || '') : '';
+    const linesSnapshot = [...orderLines];
+
+    // Store summary for email
+    lastOrderSummary = { customerName, customerEmail, lines: linesSnapshot, totalEur, totalBtl, eventName };
+    selectedPayment = null;
+
+    // Populate success screen
+    document.getElementById('success-detail').innerHTML =
+      `${customerName}<br>${totalBtl} bouteille${totalBtl > 1 ? 's' : ''} · ${totalEur.toFixed(2)} €<br><small style="opacity:0.6">Saisi par ${currentUser}</small>`;
+    document.getElementById('client-email-display').textContent = customerEmail || 'Pas d\'email renseigné';
+    document.getElementById('send-email-btn').disabled = !customerEmail;
+    document.getElementById('send-email-btn').style.opacity = customerEmail ? '1' : '0.4';
+    document.getElementById('payment-status').textContent = '';
+    document.getElementById('email-status').textContent = '';
+    ['pay-cb','pay-cash','pay-chq'].forEach(id => {
+      document.getElementById(id).classList.remove('btn-black');
+      document.getElementById(id).classList.add('btn-outline');
+    });
+    showScreen('success');
+
+    // Reset order
+    orderLines = [];
+    selectedCustomer = null;
+    selectedEvent = null;
+    document.getElementById('event-select').value = '';
+    document.getElementById('order-event-name').textContent = '–';
+  } catch(e) {
+    console.error(e);
+    showToast('Erreur: ' + (e.message || e).toString().substring(0, 80));
+  } finally {
+    btn.textContent = 'Valider et enregistrer';
+    btn.disabled = false;
+  }
+}
+
+// ─── ORDERS LIST ──────────────────────────────────────────────────
+async function loadOrdersList() {
+  const container = document.getElementById('orders-list-container');
+  container.innerHTML = '<div class="loading"><div class="spinner"></div><div class="loading-text">Chargement…</div></div>';
+  try {
+    const orders = await airtable('Orders', '?sort[0][field]=Order+Date&sort[0][direction]=desc&maxRecords=50');
+    if (orders.length === 0) {
+      container.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">Aucune commande</div></div>`;
+      return;
+    }
+    container.innerHTML = orders.map(o => {
+      const customer = o.fields['Customer name'] || (allCustomers.find(c => (o.fields['Customer'] || []).includes(c.id)) || {}).fields?.['Customer name'] || '–';
+      const event = (allEvents.find(e => (o.fields['Sales event'] || []).includes(e.id)) || {}).fields?.['Name'] || '–';
+      const date = o.fields['Order Date'] || '';
+      const total = o.fields['Total TTC'] || o.fields['Total'] || '–';
+      return `<div class="customer-item">
+        <div>
+          <div class="customer-name">${customer}</div>
+          <div class="customer-email">${event} · ${date}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:15px;font-weight:300">${total} €</div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠</div><div class="empty-text">Erreur de chargement</div></div>`;
+  }
+}
+
+// ─── STOCK TABS ───────────────────────────────────────────────────
+let crdView = 'detail';
+let stockView = 'detail';
+
+function switchStockTab(tab) {
+  ['bc','inv','crd'].forEach(t => {
+    document.getElementById('tab-'+t).className = 'btn ' + (t === tab ? 'btn-black' : 'btn-outline');
+    document.getElementById('tab-'+t).style.cssText = 'padding:10px; font-size:9px; letter-spacing:0.08em;';
+  });
+  document.getElementById('section-bc').style.display  = tab === 'bc'  ? '' : 'none';
+  document.getElementById('section-inv').style.display = tab === 'inv' ? '' : 'none';
+  document.getElementById('section-crd').style.display = tab === 'crd' ? '' : 'none';
+  if (tab === 'bc')  renderBC();
+  if (tab === 'inv') renderInv();
+  if (tab === 'crd') renderCRDList();
+}
+
+function setCRDView(view) {
+  crdView = view;
+  document.getElementById('btn-crd-detail').className = 'btn ' + (view === 'detail' ? 'btn-black' : 'btn-outline');
+  document.getElementById('btn-crd-edms').className   = 'btn ' + (view === 'edms'   ? 'btn-black' : 'btn-outline');
+  document.getElementById('btn-crd-detail').style.cssText = 'padding:8px 12px; font-size:10px;';
+  document.getElementById('btn-crd-edms').style.cssText   = 'padding:8px 12px; font-size:10px;';
+  renderCRDList();
+}
+
+// ─── BORDEAUX CONNECT ─────────────────────────────────────────────
+const VOL_HL = 0.0075; // 75cl bottle = 0.0075 HL
+
+function renderBC() {
+  const container = document.getElementById('bc-container');
+  if (!container) return;
+
+  // Compute bottle exits per BC code per month from Order Lines
+  const bottleExitsByMonthCode = {};
+  allOrderLines.forEach(l => {
+    const qty = l.fields['Quantity'] || 0;
+    const vintageIds = l.fields['Millésime'] || [];
+    const vintage = allVintages.find(v => vintageIds.includes(v.id));
+    const bcCode = vintage?.fields['BC_Code'] || '';
+    if (!bcCode) return;
+    // Find month from order
+    const orderIds = l.fields['Order'] || [];
+    const order = allOrders.find(o => orderIds.includes(o.id));
+    const date = order?.fields['Order Date'] || '';
+    const mois = date.substring(0, 7);
+    if (!mois) return;
+    const key = `${mois}_${bcCode}`;
+    bottleExitsByMonthCode[key] = (bottleExitsByMonthCode[key] || 0) + qty;
+  });
+
+  if (allStockBC.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">Aucun stock BC enregistré</div><div class="empty-text" style="margin-top:8px;">Commencez par initialiser les stocks de départ</div></div>`;
+    return;
+  }
+
+  const sorted = [...allStockBC].sort((a,b) => (b.fields['Mois']||'') > (a.fields['Mois']||'') ? 1 : -1);
+  const byMonth = {};
+  sorted.forEach(r => {
+    const m = (r.fields['Mois']||'').substring(0,7);
+    if (!byMonth[m]) byMonth[m] = [];
+    byMonth[m].push(r);
+  });
+
+  let html = '';
+  Object.keys(byMonth).sort().reverse().forEach(mois => {
+    html += `<div style="padding:10px 20px 4px; background:var(--light); border-bottom:1px solid var(--border); font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray);">${mois}</div>`;
+    byMonth[mois].forEach(r => {
+      const code = r.fields['BC_Code'] || '–';
+      const meta = BC_CODES[code] || { label: code, color: '#f5f5f5', bar: '#aaa' };
+      const debutHL = r.fields['Stock_debut_HL'] || 0;
+      const entreesHL = r.fields['Entrees_HL'] || 0;
+      const distilHL = r.fields['Distillerie_HL'] || 0;
+      const autresHL = r.fields['Autres_sorties_HL'] || 0;
+
+      // Compute bottle exits for this code + month
+      const btlExits = bottleExitsByMonthCode[`${mois}_${code}`] || 0;
+      const btlExitsHL = parseFloat((btlExits * VOL_HL).toFixed(4));
+
+      const finTheo = parseFloat((debutHL + entreesHL - btlExitsHL - distilHL - autresHL).toFixed(4));
+      const declare = r.fields['Stock_BC_declare_HL'] || 0;
+      const ecart = r.fields['Ecart_HL'] || parseFloat((finTheo - declare).toFixed(4));
+      const statut = r.fields['Statut'] || (Math.abs(ecart) < 0.001 ? '✅ OK' : Math.abs(ecart) <= 0.05 ? '⚠ Vérifier' : '🚨 Écart');
+      const statusBg = Math.abs(ecart) < 0.001 ? '#e8f5ee' : Math.abs(ecart) <= 0.05 ? '#fff3e0' : '#fdecea';
+      const statusColor = Math.abs(ecart) < 0.001 ? '#2d7a45' : Math.abs(ecart) <= 0.05 ? '#e65100' : '#c62828';
+
+      html += `<div style="padding:14px 20px; border-bottom:1px solid var(--border); background:${meta.color}20;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div>
+            <div style="font-size:15px; font-weight:400; color:var(--black);">${code}</div>
+            <div style="font-size:11px; font-weight:300; color:var(--gray);">${meta.label}</div>
+          </div>
+          <span style="font-size:10px; font-weight:500; padding:3px 8px; background:${statusBg}; color:${statusColor};">${statut}</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.7); border-radius:2px; padding:10px 12px; margin-bottom:8px;">
+          <div style="display:grid; grid-template-columns:1fr auto auto; gap:4px 12px; font-size:12px; font-weight:300;">
+            <span style="color:var(--gray);">Stock début BC</span>
+            <span style="text-align:right; font-weight:400;">${debutHL.toFixed(3)} HL</span><span></span>
+            <span style="color:#2d7a45;">+ Entrées</span>
+            <span style="text-align:right; color:#2d7a45;">+${entreesHL.toFixed(3)} HL</span><span></span>
+            <span style="color:#c04040;">− Sorties bouteilles</span>
+            <span style="text-align:right; color:#c04040;">−${btlExitsHL.toFixed(3)} HL</span>
+            <span style="text-align:right; color:var(--gray); font-size:10px;">(${btlExits} btl)</span>
+            ${distilHL > 0 ? `<span style="color:#c04040;">− Distillerie</span><span style="text-align:right; color:#c04040;">−${distilHL.toFixed(3)} HL</span><span></span>` : ''}
+            ${autresHL > 0 ? `<span style="color:#c04040;">− Autres sorties</span><span style="text-align:right; color:#c04040;">−${autresHL.toFixed(3)} HL</span><span></span>` : ''}
+          </div>
+        </div>
+        <div style="background:${statusBg}; border-radius:2px; padding:10px 12px;">
+          <div style="display:grid; grid-template-columns:1fr auto; gap:5px 12px; font-size:12px; font-weight:300;">
+            <span style="font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray);">Stock fin théorique</span>
+            <span style="text-align:right; font-size:16px; font-weight:300; color:var(--black);">${finTheo.toFixed(3)} HL</span>
+            <span style="font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray);">Déclaré dans BC</span>
+            <span style="text-align:right; font-size:16px; font-weight:300; color:var(--black);">${declare.toFixed(3)} HL</span>
+            <span style="font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:${statusColor};">Écart</span>
+            <span style="text-align:right; font-size:16px; font-weight:400; color:${statusColor};">${ecart >= 0 ? '+' : ''}${ecart.toFixed(3)} HL</span>
+          </div>
+          ${r.fields['Notes'] ? `<div style="font-size:11px; color:var(--gray); font-style:italic; margin-top:6px; border-top:1px solid rgba(0,0,0,0.06); padding-top:6px;">💬 ${r.fields['Notes']}</div>` : ''}
+        </div>
+      </div>`;
+    });
+  });
+  container.innerHTML = html;
+}
+
+function showInitBCModal() {
+  const now = new Date();
+  document.getElementById('ibc-mois').value = `${now.getFullYear()}-${String(now.getMonth()).padStart(2,'0')}`;
+  ['ibc-lou1','ibc-pbx2','ibc-cad1','ibc-bor3','ibc-bor1'].forEach(id => document.getElementById(id).value = '');
+  openModal('modal-init-bc');
+}
+
+async function saveInitBC() {
+  const mois = document.getElementById('ibc-mois').value;
+  if (!mois) { showToast('Mois requis'); return; }
+  const entries = [
+    { code: 'LOU1', label: 'Loupiac (Blanc)', val: parseFloat(document.getElementById('ibc-lou1').value) || 0 },
+    { code: 'PBX2', label: 'Côtes de Bordeaux Cadillac', val: parseFloat(document.getElementById('ibc-pbx2').value) || 0 },
+    { code: 'CAD1', label: 'Cadillac (Blanc)', val: parseFloat(document.getElementById('ibc-cad1').value) || 0 },
+    { code: 'BOR3', label: 'Bordeaux Rosé et clairet', val: parseFloat(document.getElementById('ibc-bor3').value) || 0 },
+    { code: 'BOR1', label: 'Bordeaux (Blanc)', val: parseFloat(document.getElementById('ibc-bor1').value) || 0 },
+  ].filter(e => e.val > 0);
+  if (entries.length === 0) { showToast('Saisir au moins une valeur'); return; }
+  try {
+    for (const e of entries) {
+      const rec = await airtablePost('Stock_BC', {
+        'Mois': mois + '-01',
+        'BC_Code': e.code,
+        'BC_Label': e.label,
+        'Stock_debut_HL': e.val,
+        'Entrees_HL': 0,
+        'Distillerie_HL': 0,
+        'Autres_sorties_HL': 0,
+        'Stock_BC_declare_HL': e.val,
+      });
+      allStockBC.unshift(rec);
+    }
+    closeModal('modal-init-bc');
+    renderBC();
+    showToast(`${entries.length} stocks BC enregistrés ✓`);
+  } catch(e) {
+    showToast('Erreur: ' + (e.message||e).toString().substring(0,60));
+    console.error(e);
+  }
+}
+
+function showNewBCModal() {
+  const now = new Date();
+  document.getElementById('nbc-mois').value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  document.getElementById('nbc-code').value = '';
+  ['nbc-debut','nbc-entrees','nbc-distil','nbc-autres','nbc-declare'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('nbc-note').value = '';
+  document.getElementById('nbc-preview').textContent = '';
+  openModal('modal-new-bc');
+}
+
+function updateBCPreview() {
+  const debut = parseFloat(document.getElementById('nbc-debut').value) || 0;
+  const entrees = parseFloat(document.getElementById('nbc-entrees').value) || 0;
+  const distil = parseFloat(document.getElementById('nbc-distil').value) || 0;
+  const autres = parseFloat(document.getElementById('nbc-autres').value) || 0;
+  const code = document.getElementById('nbc-code').value;
+  const mois = document.getElementById('nbc-mois').value;
+
+  // Auto-compute bottle exits
+  let btlExits = 0;
+  if (code && mois) {
+    allOrderLines.forEach(l => {
+      const vintageIds = l.fields['Millésime'] || [];
+      const vintage = allVintages.find(v => vintageIds.includes(v.id));
+      if (vintage?.fields['BC_Code'] !== code) return;
+      const orderIds = l.fields['Order'] || [];
+      const order = allOrders.find(o => orderIds.includes(o.id));
+      const date = order?.fields['Order Date'] || '';
+      if (date.substring(0,7) !== mois) return;
+      btlExits += l.fields['Quantity'] || 0;
+    });
+  }
+  const btlHL = parseFloat((btlExits * VOL_HL).toFixed(4));
+  const fin = parseFloat((debut + entrees - btlHL - distil - autres).toFixed(4));
+  document.getElementById('nbc-preview').innerHTML =
+    `Sorties bouteilles : <strong>${btlExits} btl = ${btlHL.toFixed(3)} HL</strong> &nbsp;|&nbsp; Stock fin théorique : <strong>${fin.toFixed(3)} HL</strong>`;
+}
+
+async function saveBC() {
+  const mois = document.getElementById('nbc-mois').value;
+  const code = document.getElementById('nbc-code').value;
+  if (!mois || !code) { showToast('Mois et appellation requis'); return; }
+  const meta = BC_CODES[code] || {};
+  const fields = {
+    'Mois': mois + '-01',
+    'BC_Code': code,
+    'BC_Label': meta.label || code,
+    'Stock_debut_HL': parseFloat(document.getElementById('nbc-debut').value) || 0,
+    'Entrees_HL': parseFloat(document.getElementById('nbc-entrees').value) || 0,
+    'Distillerie_HL': parseFloat(document.getElementById('nbc-distil').value) || 0,
+    'Autres_sorties_HL': parseFloat(document.getElementById('nbc-autres').value) || 0,
+    'Stock_BC_declare_HL': parseFloat(document.getElementById('nbc-declare').value) || 0,
+  };
+  if (document.getElementById('nbc-note').value) fields['Notes'] = document.getElementById('nbc-note').value;
+  try {
+    const rec = await airtablePost('Stock_BC', fields);
+    allStockBC.unshift(rec);
+    closeModal('modal-new-bc');
+    renderBC();
+    showToast('Stock BC enregistré ✓');
+  } catch(e) {
+    showToast('Erreur: ' + (e.message||e).toString().substring(0,60));
+    console.error(e);
+  }
+}
+
+// ─── INVENTAIRE PHYSIQUE ─────────────────────────────────────────
+function renderInv() {
+  const container = document.getElementById('inv-container');
+  if (!container) return;
+
+  if (allInventaire.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">🔢</div><div class="empty-text">Aucun inventaire saisi</div></div>`;
+    return;
+  }
+
+  const sorted = [...allInventaire].sort((a,b) => (b.fields['Mois']||'') > (a.fields['Mois']||'') ? 1 : -1);
+  const byMonth = {};
+  sorted.forEach(r => {
+    const m = (r.fields['Mois']||'').substring(0,7);
+    if (!byMonth[m]) byMonth[m] = [];
+    byMonth[m].push(r);
+  });
+
+  // Compute theoretical bottles per vintage from Stock Mensuel
+  const theoByVintage = {};
+  allStockRecords.forEach(r => {
+    const milIds = r.fields['Millésime'] || [];
+    const mois = (r.fields['Mois']||'').substring(0,7);
+    milIds.forEach(vid => {
+      const key = `${mois}_${vid}`;
+      const debut = (r.fields['Stock_debut_bouteilles_nues']||0) + (r.fields['Stock_debut_bouteilles_habillees']||0) + ((r.fields['Stock_debut_coffrets']||0)*4);
+      const entrees = r.fields['Entrees_bouteilles']||0;
+      const sorties = (r.fields['Sorties_ventes']||0) + (r.fields['Sorties_gifts_samples']||0) + (r.fields['Sorties_autres']||0);
+      theoByVintage[key] = debut + entrees - sorties;
+    });
+  });
+
+  let html = '';
+  // Rapprochement BC par mois
+  Object.keys(byMonth).sort().reverse().forEach(mois => {
+    html += `<div style="padding:10px 20px 4px; background:var(--light); border-bottom:1px solid var(--border); font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray);">${mois} — Inventaire physique</div>`;
+
+    // Group by BC code for rapprochement
+    const rapprochement = {};
+    byMonth[mois].forEach(r => {
+      const vintageIds = r.fields['Wine_Vintage'] || [];
+      const btlPhysiques = (r.fields['Bouteilles_physiques']||0) + ((r.fields['Coffrets_4']||0)*4);
+      const vintageId = vintageIds[0];
+      const vintage = allVintages.find(v => v.id === vintageId);
+      const bcCode = vintage?.fields['BC_Code'] || 'AUTRE';
+      const vName = vintage?.fields['Vintage name'] || vintage?.fields['Name'] || '–';
+      const theoKey = `${mois}_${vintageId}`;
+      const theo = theoByVintage[theoKey] || 0;
+      const ecartBtl = btlPhysiques - theo;
+      const ecartColor = ecartBtl === 0 ? '#2d7a45' : Math.abs(ecartBtl) <= 3 ? '#e65100' : '#c62828';
+
+      // Per-vintage row
+      html += `<div style="padding:10px 20px; border-bottom:1px solid #f0f0f0; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:13px; font-weight:300;">${vName}</div>
+          <div style="font-size:10px; color:var(--gray);">${bcCode}</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:14px; font-weight:300;">${btlPhysiques} btl</div>
+          <div style="font-size:11px; color:${ecartColor};">Théo: ${theo} | Écart: ${ecartBtl >= 0 ? '+' : ''}${ecartBtl}</div>
+        </div>
+      </div>`;
+
+      // Accumulate for rapprochement
+      if (!rapprochement[bcCode]) rapprochement[bcCode] = { btlPhys: 0, btlTheo: 0 };
+      rapprochement[bcCode].btlPhys += btlPhysiques;
+      rapprochement[bcCode].btlTheo += theo;
+    });
+
+    // Rapprochement BC
+    html += `<div style="padding:10px 20px 4px; background:#f0f0f0; font-size:10px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray); margin-top:4px;">Rapprochement Bordeaux Connect</div>`;
+    Object.entries(rapprochement).forEach(([code, d]) => {
+      const bcRecord = allStockBC.find(r => r.fields['BC_Code'] === code && (r.fields['Mois']||'').substring(0,7) === mois);
+      const bcHL = bcRecord?.fields['Stock_BC_declare_HL'] || 0;
+      const physHL = parseFloat((d.btlPhys * VOL_HL).toFixed(4));
+      const ecartHL = parseFloat((physHL - bcHL).toFixed(4));
+      const ecartColor = Math.abs(ecartHL) < 0.001 ? '#2d7a45' : Math.abs(ecartHL) <= 0.05 ? '#e65100' : '#c62828';
+      html += `<div style="padding:10px 20px; border-bottom:1px solid var(--border); background:white;">
+        <div style="font-size:12px; font-weight:400; margin-bottom:4px;">${code} – ${BC_CODES[code]?.label || code}</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; font-size:11px; font-weight:300; text-align:center;">
+          <div style="background:var(--light); padding:6px; border-radius:2px;">
+            <div style="font-weight:500;">${physHL.toFixed(3)} HL</div>
+            <div style="color:var(--gray); font-size:9px;">Physique</div>
+          </div>
+          <div style="background:var(--light); padding:6px; border-radius:2px;">
+            <div style="font-weight:500;">${bcHL.toFixed(3)} HL</div>
+            <div style="color:var(--gray); font-size:9px;">BC déclaré</div>
+          </div>
+          <div style="background:${Math.abs(ecartHL)<0.001?'#e8f5ee':Math.abs(ecartHL)<=0.05?'#fff3e0':'#fdecea'}; padding:6px; border-radius:2px;">
+            <div style="font-weight:500; color:${ecartColor};">${ecartHL>=0?'+':''}${ecartHL.toFixed(3)}</div>
+            <div style="color:${ecartColor}; font-size:9px;">Écart HL</div>
+          </div>
+        </div>
+      </div>`;
+    });
+  });
+
+  container.innerHTML = html;
+}
+
+function showNewInvModal() {
+  const now = new Date();
+  document.getElementById('ninv-mois').value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  document.getElementById('ninv-note').value = '';
+  // Populate vintage inputs
+  const wrap = document.getElementById('ninv-vintages');
+  wrap.innerHTML = allVintages.map(v => {
+    const name = v.fields['Vintage name'] || v.fields['Name'] || v.id;
+    const code = v.fields['BC_Code'] || '';
+    return `<div style="display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid var(--border);">
+      <div>
+        <div style="font-size:13px; font-weight:300;">${name}</div>
+        <div style="font-size:10px; color:var(--gray);">${code}</div>
+      </div>
+      <input type="number" min="0" placeholder="0" data-vintage="${v.id}"
+        style="width:70px; text-align:right; border:none; border-bottom:1.5px solid var(--border); padding:4px 0; font-size:14px; font-weight:300; font-family:'Raleway',sans-serif; background:transparent;">
+    </div>`;
+  }).join('');
+  openModal('modal-new-inv');
+}
+
+async function saveInv() {
+  const mois = document.getElementById('ninv-mois').value;
+  if (!mois) { showToast('Mois requis'); return; }
+  const note = document.getElementById('ninv-note').value;
+  const inputs = document.querySelectorAll('#ninv-vintages input[data-vintage]');
+  const toSave = [];
+  inputs.forEach(inp => {
+    const val = parseInt(inp.value) || 0;
+    if (val > 0) toSave.push({ vintageId: inp.dataset.vintage, qty: val });
+  });
+  if (toSave.length === 0) { showToast('Saisir au moins une quantité'); return; }
+  try {
+    for (const item of toSave) {
+      const fields = {
+        'Mois': mois + '-01',
+        'Wine_Vintage': [item.vintageId],
+        'Bouteilles_physiques': item.qty,
+      };
+      if (note) fields['Notes'] = note;
+      const rec = await airtablePost('Inventaire_Physique', fields);
+      allInventaire.unshift(rec);
+    }
+    closeModal('modal-new-inv');
+    renderInv();
+    showToast(`Inventaire enregistré ✓`);
+  } catch(e) {
+    showToast('Erreur: ' + (e.message||e).toString().substring(0,60));
+    console.error(e);
+  }
+}
+
+// ─── CRD ──────────────────────────────────────────────────────────
+function renderCRDList() {
+  const container = document.getElementById('crd-container');
+  if (allCRDRecords.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">💊</div><div class="empty-text">Aucun enregistrement CRD</div></div>`;
+    return;
+  }
+
+  const sorted = [...allCRDRecords].sort((a, b) => (b.fields['Mois'] || '') > (a.fields['Mois'] || '') ? 1 : -1);
+
+  // Group by month
+  const byMonth = {};
+  sorted.forEach(r => {
+    const mois = (r.fields['Mois'] || '').substring(0, 7);
+    if (!byMonth[mois]) byMonth[mois] = [];
+    byMonth[mois].push(r);
+  });
+
+  let html = '';
+  Object.keys(byMonth).sort().reverse().forEach(mois => {
+    html += `<div style="padding:10px 20px 4px; background:var(--light); border-bottom:1px solid var(--border); font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray);">${mois}</div>`;
+
+    byMonth[mois].forEach(r => {
+      const type = r.fields['Type_capsule'] || '–';
+      const isNoire = type === 'Noire';
+      const capColor = isNoire ? '#222' : '#aaa';
+      const capBg = isNoire ? '#f0f0f0' : '#f8f8f8';
+      const capEmoji = isNoire ? '🖤' : '⬜';
+
+      const debut = r.fields['Stock_debut'] || 0;
+      const entrees = r.fields['Entrees'] || 0;
+      const posees = r.fields['Sorties_posees'] || 0;
+      const casse = r.fields['Sorties_casse'] || 0;
+      const boite = r.fields['Stock_boite'] || 0;
+      const finTheo = r.fields['Stock_fin_theorique'] || (debut + entrees - posees - casse);
+      const ecart = r.fields['Ecart_CRD'] || (finTheo - boite);
+
+      const statusColor = ecart === 0 ? '#2d7a45' : Math.abs(ecart) <= 5 ? '#e65100' : '#c62828';
+      const statusLabel = ecart === 0 ? '✅ OK' : Math.abs(ecart) <= 5 ? '⚠ Écart mineur' : '🚨 Écart';
+      const statusBg = ecart === 0 ? '#e8f5ee' : Math.abs(ecart) <= 5 ? '#fff3e0' : '#fdecea';
+
+      // Appellations
+      const appIds = r.fields['Appellations'] || [];
+      const apps = appIds.map(id => (allWines.find(w => w.id === id) || {}).fields?.['Vintage name'] || '').filter(Boolean).join(' · ');
+
+      html += `
+      <div style="padding:14px 20px; border-bottom:1px solid var(--border);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div>
+            <div style="font-size:15px; font-weight:300; color:var(--black);">${capEmoji} Capsule ${type}</div>
+            ${apps ? `<div style="font-size:11px; font-weight:300; color:var(--gray); margin-top:2px;">${apps}</div>` : ''}
+          </div>
+          <span style="font-size:10px; font-weight:500; padding:3px 8px; background:${statusBg}; color:${statusColor};">${statusLabel}</span>
+        </div>
+
+        <!-- Entrées -->
+        <div style="background:#f0f7f3; border-radius:2px; padding:10px 12px; margin-bottom:8px;">
+          <div style="font-size:9px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray); margin-bottom:6px;">Entrées</div>
+          <div style="display:grid; grid-template-columns:1fr auto; gap:4px 12px; font-size:12px; font-weight:300;">
+            <span style="color:var(--gray);">Stock début de mois</span><span style="text-align:right; font-weight:400;">${debut.toLocaleString()} caps.</span>
+            <span style="color:var(--gray);">Achats du mois</span><span style="text-align:right; color:#2d7a45; font-weight:400;">+${entrees.toLocaleString()} caps.</span>
+            <span style="color:#555; font-weight:400; border-top:1px solid #d4edd8; padding-top:4px;">Total disponible</span><span style="text-align:right; font-weight:500; border-top:1px solid #d4edd8; padding-top:4px;">${(debut+entrees).toLocaleString()} caps.</span>
+          </div>
+        </div>
+
+        <!-- Sorties -->
+        <div style="background:#fdf8f8; border-radius:2px; padding:10px 12px; margin-bottom:8px;">
+          <div style="font-size:9px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray); margin-bottom:6px;">Sorties</div>
+          <div style="display:grid; grid-template-columns:1fr auto; gap:4px 12px; font-size:12px; font-weight:300;">
+            <span style="color:var(--gray);">Posées (= bouteilles)</span><span style="text-align:right; color:#c04040; font-weight:400;">−${posees.toLocaleString()} caps.</span>
+            <span style="color:var(--gray);">Casse / inutilisables</span><span style="text-align:right; color:#c04040; font-weight:400;">−${casse.toLocaleString()} caps.</span>
+            <span style="color:#555; font-weight:400; border-top:1px solid #f5d0d0; padding-top:4px;">Total sorties</span><span style="text-align:right; font-weight:500; color:#c04040; border-top:1px solid #f5d0d0; padding-top:4px;">−${(posees+casse).toLocaleString()} caps.</span>
+          </div>
+        </div>
+
+        <!-- Stock fin -->
+        <div style="background:${statusBg}; border-radius:2px; padding:10px 12px;">
+          <div style="display:grid; grid-template-columns:1fr auto; gap:6px 12px; font-size:12px; font-weight:300;">
+            <span style="color:var(--gray); font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;">Stock théorique fin de mois</span>
+            <span style="text-align:right; font-size:16px; font-weight:300; color:var(--black);">${finTheo.toLocaleString()} caps.</span>
+            <span style="color:var(--gray); font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;">Stock boîte (physique)</span>
+            <span style="text-align:right; font-size:16px; font-weight:300; color:var(--black);">${boite.toLocaleString()} caps.</span>
+            <span style="color:${statusColor}; font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;">Écart</span>
+            <span style="text-align:right; font-size:16px; font-weight:400; color:${statusColor};">${ecart > 0 ? '+' : ''}${ecart} caps.</span>
+          </div>
+          ${r.fields['Fournisseur'] ? `<div style="font-size:11px; font-weight:300; color:var(--gray); margin-top:8px; border-top:1px solid rgba(0,0,0,0.06); padding-top:6px;">Fournisseur : ${r.fields['Fournisseur']}</div>` : ''}
+          ${r.fields['Notes'] ? `<div style="font-size:11px; font-weight:300; color:var(--gray); font-style:italic; margin-top:4px;">💬 ${r.fields['Notes']}</div>` : ''}
+        </div>
+      </div>`;
+    });
+  });
+
+  container.innerHTML = html || `<div class="empty-state"><div class="empty-icon">💊</div><div class="empty-text">Aucun enregistrement CRD</div></div>`;
+}
+
+function showNewCRDModal() {
+  const now = new Date();
+  document.getElementById('crd-mois').value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  document.getElementById('crd-type').value = '';
+  ['crd-debut','crd-entrees','crd-posees','crd-casse','crd-boite'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('crd-fournisseur').value = '';
+  document.getElementById('crd-note').value = '';
+  document.getElementById('crd-calc-preview').textContent = '';
+  // Live preview on input
+  ['crd-debut','crd-entrees','crd-posees','crd-casse','crd-boite'].forEach(id => {
+    document.getElementById(id).oninput = updateCRDPreview;
+  });
+  openModal('modal-new-crd');
+}
+
+function updateCRDPreview() {
+  const debut = parseInt(document.getElementById('crd-debut').value) || 0;
+  const entrees = parseInt(document.getElementById('crd-entrees').value) || 0;
+  const posees = parseInt(document.getElementById('crd-posees').value) || 0;
+  const casse = parseInt(document.getElementById('crd-casse').value) || 0;
+  const boite = parseInt(document.getElementById('crd-boite').value) || 0;
+  const theo = debut + entrees - posees - casse;
+  const ecart = theo - boite;
+  const preview = document.getElementById('crd-calc-preview');
+  preview.innerHTML = `Stock théorique : <strong>${theo.toLocaleString()}</strong> caps. &nbsp;|&nbsp; Écart : <strong style="color:${ecart===0?'#2d7a45':ecart<0?'#c04040':'#e65100'}">${ecart>0?'+':''}${ecart}</strong>`;
+}
+
+async function saveCRDRecord() {
+  const mois = document.getElementById('crd-mois').value;
+  const type = document.getElementById('crd-type').value;
+  if (!mois || !type) { showToast('Mois et type de capsule requis'); return; }
+  const fields = {
+    'Mois': mois + '-01',
+    'Type_capsule': type,
+    'Stock_debut': parseInt(document.getElementById('crd-debut').value) || 0,
+    'Entrees': parseInt(document.getElementById('crd-entrees').value) || 0,
+    'Sorties_posees': parseInt(document.getElementById('crd-posees').value) || 0,
+    'Sorties_casse': parseInt(document.getElementById('crd-casse').value) || 0,
+    'Stock_boite': parseInt(document.getElementById('crd-boite').value) || 0,
+  };
+  if (document.getElementById('crd-fournisseur').value) fields['Fournisseur'] = document.getElementById('crd-fournisseur').value;
+  if (document.getElementById('crd-note').value) fields['Notes'] = document.getElementById('crd-note').value;
+  try {
+    const rec = await airtablePost('CRD', fields);
+    allCRDRecords.unshift(rec);
+    closeModal('modal-new-crd');
+    renderCRDList();
+    showToast('CRD enregistré ✓');
+  } catch(e) {
+    showToast('Erreur: ' + (e.message||e).toString().substring(0,60));
+    console.error(e);
+  }
+}
+
+// ─── STOCK ────────────────────────────────────────────────────────
+const BTL_PER_HL = 133.33;
+function btlToHl(btl) { return btl > 0 ? (btl / BTL_PER_HL).toFixed(3) : '0.000'; }
+
+function renderStockList() {
+  const container = document.getElementById('stock-container');
+  if (!container) return;
+  if (allStockRecords.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">📦</div><div class="empty-text">Aucun enregistrement</div></div>`;
+    return;
+  }
+
+  const wineFilter = (document.getElementById('stock-wine-filter') || {}).value || '';
+
+  // Filter records
+  let records = allStockRecords;
+  if (wineFilter) {
+    records = records.filter(r => (r.fields['Appellation'] || []).includes(wineFilter));
+  }
+
+  if (stockView === 'edms') {
+    renderStockEdms(records);
+  } else {
+    renderStockDetail(records);
+  }
+}
+
+function renderStockDetail(records) {
+  const container = document.getElementById('stock-container');
+  const sorted = [...records].sort((a, b) => (b.fields['Mois'] || '') > (a.fields['Mois'] || '') ? 1 : -1);
+  const byMonth = {};
+  sorted.forEach(r => {
+    const mois = (r.fields['Mois'] || '').substring(0, 7);
+    if (!byMonth[mois]) byMonth[mois] = [];
+    byMonth[mois].push(r);
+  });
+
+  let html = '';
+  Object.keys(byMonth).sort().reverse().forEach(mois => {
+    html += `<div style="padding:10px 20px 4px; background:var(--light); border-bottom:1px solid var(--border); font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray);">${mois}</div>`;
+    byMonth[mois].forEach(r => {
+      const appWine = allWines.find(w => (r.fields['Appellation'] || []).includes(w.id));
+      const appellation = appWine?.fields['Vintage name'] || '–';
+      const milVintage = allVintages.find(v => (r.fields['Millésime'] || []).includes(v.id));
+      const millesime = milVintage?.fields['Vintage'] || milVintage?.fields['Year'] || milVintage?.fields['Millésime'] || '';
+      const stockDebut = (r.fields['Stock_debut_bouteilles_nues'] || 0) + (r.fields['Stock_debut_bouteilles_habillees'] || 0) + ((r.fields['Stock_debut_coffrets'] || 0) * 4);
+      const entrees = r.fields['Entrees_bouteilles'] || 0;
+      const ventes = r.fields['Sorties_ventes'] || 0;
+      const offerts = r.fields['Sorties_gifts_samples'] || 0;
+      const autres = r.fields['Sorties_autres'] || 0;
+      const totalSorties = ventes + offerts + autres;
+      const stockFin = r.fields['Stock_fin_theorique_bouteilles'] || (stockDebut + entrees - totalSorties);
+      const stockEdms = r.fields['Stock_declare_eDMS'] || 0;
+      const ecart = r.fields['Ecart'] || (stockFin - stockEdms);
+      const statusColor = ecart === 0 ? '#2d7a45' : Math.abs(ecart) <= 2 ? '#e65100' : '#c62828';
+      const statusBg = ecart === 0 ? '#e8f5ee' : Math.abs(ecart) <= 2 ? '#fff3e0' : '#fdecea';
+      const statusLabel = ecart === 0 ? '✅ OK' : Math.abs(ecart) <= 2 ? '⚠ Écart mineur' : '🚨 Écart';
+      html += `<div style="padding:14px 20px; border-bottom:1px solid var(--border);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div>
+            <div style="font-size:15px; font-weight:300;">${appellation}</div>
+            ${millesime ? `<div style="font-size:11px; font-weight:300; color:var(--gray);">Millésime ${millesime}</div>` : ''}
+          </div>
+          <span style="font-size:10px; font-weight:500; padding:3px 8px; background:${statusBg}; color:${statusColor};">${statusLabel}</span>
+        </div>
+        <div style="background:var(--light); border-radius:2px; padding:10px 12px; margin-bottom:8px;">
+          <div style="font-size:9px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray); margin-bottom:8px;">Inventaire</div>
+          <div style="display:grid; grid-template-columns:1fr auto auto; gap:4px 12px; font-size:12px; font-weight:300;">
+            <span style="color:var(--gray);">Stock début</span><span style="text-align:right; font-weight:400;">${stockDebut} btl</span><span style="text-align:right; color:var(--gray);">${btlToHl(stockDebut)} HL</span>
+            <span style="color:var(--gray);">+ Entrées</span><span style="text-align:right; color:#2d7a45; font-weight:400;">+${entrees} btl</span><span style="text-align:right; color:var(--gray);">${btlToHl(entrees)} HL</span>
+          </div>
+        </div>
+        <div style="background:#fdf8f8; border-radius:2px; padding:10px 12px; margin-bottom:8px;">
+          <div style="font-size:9px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray); margin-bottom:8px;">Sorties</div>
+          <div style="display:grid; grid-template-columns:1fr auto auto; gap:4px 12px; font-size:12px; font-weight:300;">
+            <span style="color:var(--gray);">Ventes</span><span style="text-align:right; color:#c04040; font-weight:400;">−${ventes} btl</span><span style="text-align:right; color:var(--gray);">${btlToHl(ventes)} HL</span>
+            <span style="color:var(--gray);">Offerts / Dégustation</span><span style="text-align:right; color:#c04040; font-weight:400;">−${offerts} btl</span><span style="text-align:right; color:var(--gray);">${btlToHl(offerts)} HL</span>
+            <span style="color:var(--gray);">Autres</span><span style="text-align:right; color:#c04040; font-weight:400;">−${autres} btl</span><span style="text-align:right; color:var(--gray);">${btlToHl(autres)} HL</span>
+            <span style="color:#555; font-weight:400; border-top:1px solid var(--border); padding-top:4px;">Total</span><span style="text-align:right; color:#c04040; font-weight:500; border-top:1px solid var(--border); padding-top:4px;">−${totalSorties} btl</span><span style="text-align:right; color:var(--gray); border-top:1px solid var(--border); padding-top:4px;">${btlToHl(totalSorties)} HL</span>
+          </div>
+        </div>
+        <div style="background:${statusBg}; border-radius:2px; padding:10px 12px;">
+          <div style="display:grid; grid-template-columns:1fr auto auto; gap:6px 12px;">
+            <div style="font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray);">Stock fin théorique</div>
+            <div style="text-align:right; font-size:16px; font-weight:300;">${stockFin} btl</div>
+            <div style="text-align:right; font-size:12px; font-weight:300; color:var(--gray);">${btlToHl(stockFin)} HL</div>
+            <div style="font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray);">Déclaré eDMS</div>
+            <div style="text-align:right; font-size:16px; font-weight:300;">${stockEdms} btl</div>
+            <div style="text-align:right; font-size:12px; font-weight:300; color:var(--gray);">${btlToHl(stockEdms)} HL</div>
+            <div style="font-size:9px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:${statusColor};">Écart</div>
+            <div style="text-align:right; font-size:16px; font-weight:400; color:${statusColor};">${ecart > 0 ? '+' : ''}${ecart} btl</div>
+            <div style="text-align:right; font-size:12px; color:${statusColor};">${ecart > 0 ? '+' : ''}${btlToHl(Math.abs(ecart))} HL</div>
+          </div>
+          ${r.fields['Notes_justification'] ? `<div style="font-size:11px; font-weight:300; color:var(--gray); font-style:italic; margin-top:8px; border-top:1px solid rgba(0,0,0,0.08); padding-top:6px;">💬 ${r.fields['Notes_justification']}</div>` : ''}
+        </div>
+      </div>`;
+    });
+  });
+  container.innerHTML = html || `<div class="empty-state"><div class="empty-icon">📦</div><div class="empty-text">Aucun enregistrement</div></div>`;
+}
+
+function renderStockEdms(records) {
+  const container = document.getElementById('stock-container');
+
+  // Mapping appellation → code eDMS Bordeaux Connect
+  const EDMS_CODES = {
+    'Loupiac': { code: 'LOU1', label: 'LOU1 – Loupiac (Blanc)' },
+    'Cadillac Côtes de Bordeaux': { code: 'PBX2', label: 'PBX2 – Côtes de Bordeaux Cadillac' },
+    'Cadillac': { code: 'CAD1', label: 'CAD1 – Cadillac (Blanc)' },
+    'Bordeaux Rosé': { code: 'BOR3', label: 'BOR3 – Bordeaux (Rosé et clairet)' },
+    'Bordeaux Sec': { code: 'BOR1', label: 'BOR1 – Bordeaux (Blanc)' },
+  };
+
+  // Group by month + appellation
+  const byMonthApp = {};
+  records.forEach(r => {
+    const mois = (r.fields['Mois'] || '').substring(0, 7);
+    const appWine = allWines.find(w => (r.fields['Appellation'] || []).includes(w.id));
+    const appellation = appWine?.fields['Name'] || '–';
+    const key = `${mois}_${appellation}`;
+    if (!byMonthApp[key]) byMonthApp[key] = { mois, appellation, stockDebut: 0, entrees: 0, ventes: 0, offerts: 0, autres: 0, stockEdms: 0, count: 0 };
+    const d = byMonthApp[key];
+    d.stockDebut += (r.fields['Stock_debut_bouteilles_nues'] || 0) + (r.fields['Stock_debut_bouteilles_habillees'] || 0) + ((r.fields['Stock_debut_coffrets'] || 0) * 4);
+    d.entrees += r.fields['Entrees_bouteilles'] || 0;
+    d.ventes += r.fields['Sorties_ventes'] || 0;
+    d.offerts += r.fields['Sorties_gifts_samples'] || 0;
+    d.autres += r.fields['Sorties_autres'] || 0;
+    d.stockEdms += r.fields['Stock_declare_eDMS'] || 0;
+    d.count++;
+  });
+
+  const byMonth = {};
+  Object.values(byMonthApp).forEach(d => {
+    if (!byMonth[d.mois]) byMonth[d.mois] = [];
+    byMonth[d.mois].push(d);
+  });
+
+  let html = `<div style="padding:10px 20px; background:#fff8e0; border-bottom:1px solid #f0d070; font-size:11px; font-weight:300; color:#7a5a00;">
+    📋 Vue eDMS — valeurs en <strong>HL</strong> · Tous millésimes agrégés · Prêt pour Bordeaux Connect
+  </div>`;
+
+  Object.keys(byMonth).sort().reverse().forEach(mois => {
+    html += `<div style="padding:10px 20px 4px; background:var(--light); border-bottom:1px solid var(--border); font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray);">${mois}</div>`;
+
+    // Build table header
+    const appellations = byMonth[mois];
+    html += `<div style="overflow-x:auto; padding:0;">
+      <table style="width:100%; border-collapse:collapse; font-size:11px; font-weight:300;">
+        <thead>
+          <tr style="background:#f0ece8;">
+            <td style="padding:8px 12px; font-weight:500; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gray); border-bottom:1px solid var(--border); min-width:140px;"></td>
+            ${appellations.map(d => {
+              const edms = EDMS_CODES[d.appellation] || { code: d.appellation, label: d.appellation };
+              return `<td style="padding:8px 10px; text-align:center; border-bottom:1px solid var(--border); border-left:1px solid var(--border);">
+                <div style="font-weight:600; color:var(--black);">${edms.code}</div>
+                <div style="font-size:9px; color:var(--gray); margin-top:2px; white-space:nowrap;">${d.appellation}</div>
+              </td>`;
+            }).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${buildEdmsRow('Stock début de mois', appellations, d => btlToHl(d.stockDebut), '#111', false)}
+          ${buildEdmsRow('+ Entrées', appellations, d => btlToHl(d.entrees), '#2d7a45', false)}
+          ${buildEdmsRow('− Sorties (ventes + offerts)', appellations, d => btlToHl(d.ventes + d.offerts + d.autres), '#c04040', false)}
+          ${buildEdmsRow('Stock fin de mois', appellations, d => btlToHl(d.stockDebut + d.entrees - d.ventes - d.offerts - d.autres), '#111', true)}
+          ${buildEdmsRow('Déclaré eDMS', appellations, d => btlToHl(d.stockEdms), '#888', false)}
+          ${buildEdmsRow('Écart', appellations, d => {
+            const fin = d.stockDebut + d.entrees - d.ventes - d.offerts - d.autres;
+            const ecart = fin - d.stockEdms;
+            const hl = (ecart / BTL_PER_HL).toFixed(3);
+            return `<span style="color:${ecart===0?'#2d7a45':Math.abs(ecart)<=2?'#e65100':'#c62828'}; font-weight:${ecart!==0?'500':'300'};">${ecart>0?'+':''}${hl}</span>`;
+          }, '#111', false, true)}
+        </tbody>
+      </table>
+    </div>
+    <div style="padding:10px 20px; font-size:10px; font-weight:300; color:var(--gray); border-bottom:1px solid var(--border);">
+      ℹ Les valeurs sont en hectolitres (HL). Conversion : 1 btl 75cl = 0.075 HL
+    </div>`;
+  });
+
+  container.innerHTML = html || `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">Aucune donnée</div></div>`;
+}
+
+function buildEdmsRow(label, appellations, valueFn, color, bold, rawHtml = false) {
+  const cells = appellations.map(d => {
+    const val = valueFn(d);
+    return `<td style="padding:8px 10px; text-align:center; border-left:1px solid var(--border); color:${color}; font-weight:${bold?'500':'300'}; font-size:12px;">${rawHtml ? val : val}</td>`;
+  }).join('');
+  return `<tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:8px 12px; color:var(--gray); font-size:11px; ${bold ? 'font-weight:500; background:#f5f5f5;' : ''}">${label}</td>
+    ${cells}
+  </tr>`;
+}
+
+function populateStockModals() {
+  const appSel = document.getElementById('ns-appellation');
+  appSel.innerHTML = '<option value="">Sélectionner…</option>';
+  allWines.forEach(w => {
+    const opt = document.createElement('option');
+    opt.value = w.id;
+    opt.textContent =
+  w.fields['Name']
+  || w.fields['Wine name']
+  || w.fields['Appellation']
+  || 'Vin';
+    appSel.appendChild(opt);
+  });
+  const milSel = document.getElementById('ns-millesime');
+  milSel.innerHTML = '<option value="">Sélectionner…</option>';
+  allVintages.forEach(v => {
+    const opt = document.createElement('option');
+    opt.value = v.id;
+    opt.textContent = `${(allWines.find(w => (v.fields['Wine'] || v.fields['Wines'] || []).includes(w.id)) || {}).fields?.['Name'] || ''} ${v.fields['Vintage'] || v.fields['Year'] || v.fields['Millésime'] || ''}`.trim();
+    milSel.appendChild(opt);
+  });
+  // Default month
+  const now = new Date();
+  document.getElementById('ns-mois').value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+}
+
+function showNewStockModal() { openModal('modal-new-stock'); }
+
+async function saveStockRecord() {
+  const mois = document.getElementById('ns-mois').value;
+  const appId = document.getElementById('ns-appellation').value;
+  const milId = document.getElementById('ns-millesime').value;
+  if (!mois || !appId || !milId) { showToast('Mois, appellation et millésime requis'); return; }
+  const fields = {
+    'Mois': mois + '-01',
+    'Appellation': [appId],
+    'Millésime': [milId],
+    'Stock_debut_bouteilles_nues': parseInt(document.getElementById('ns-stock-debut').value) || 0,
+    'Entrees_bouteilles': parseInt(document.getElementById('ns-entrees').value) || 0,
+    'Sorties_ventes': parseInt(document.getElementById('ns-ventes').value) || 0,
+    'Sorties_gifts_samples': parseInt(document.getElementById('ns-offerts').value) || 0,
+    'Sorties_autres': parseInt(document.getElementById('ns-autres').value) || 0,
+    'Stock_declare_eDMS': parseInt(document.getElementById('ns-edms').value) || 0,
+  };
+  if (document.getElementById('ns-note').value) fields['Notes_justification'] = document.getElementById('ns-note').value;
+  try {
+    const rec = await airtablePost('Stock Mensuel', fields);
+    allStockRecords.unshift(rec);
+    closeModal('modal-new-stock');
+    renderStockList();
+    showToast('Stock enregistré ✓');
+  } catch(e) {
+    showToast('Erreur enregistrement stock');
+    console.error(e);
+  }
+}
+
+// ─── DASHBOARD DATA ───────────────────────────────────────────────
+let allOrders = [];
+let allOrderLines = [];
+let dashFilter = { type: 'all', value: null };
+
+async function loadDashboardData() {
+  try {
+    const orders = await airtable('Orders');    await sleep(500);
+    const lines  = await airtable('Order Lines');
+    allOrders = orders;
+    allOrderLines = lines;
+    populateEventFilter();
+    renderDashboard();
+  } catch(e) {
+    document.getElementById('wine-breakdown').innerHTML =
+      `<div class="empty-state"><div class="empty-icon">⚠</div><div class="empty-text">Erreur chargement données</div></div>`;
+    console.error('Dashboard error:', e);
+  }
+}
+
+function populateEventFilter() {
+  const sel = document.getElementById('filter-event-sel');
+  sel.innerHTML = '<option value="">Par événement</option>';
+  allEvents.forEach(e => {
+    const opt = document.createElement('option');
+    opt.value = e.id;
+    opt.textContent = e.fields['Name'] || e.fields['Event name'] || e.id;
+    sel.appendChild(opt);
+  });
+}
+
+function applyFilter(type, value) {
+  dashFilter = { type, value };
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  if (type === 'all') document.getElementById('filter-all').classList.add('active');
+  renderDashboard();
+}
+
+function showMonthPicker() {
+  const month = prompt('Entrez le mois (format: 2026-05)');
+  if (!month) return;
+  dashFilter = { type: 'month', value: month };
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  document.getElementById('filter-month').classList.add('active');
+  document.getElementById('filter-month').textContent = month;
+  renderDashboard();
+}
+
+function getFilteredLines() {
+  let filteredOrders = allOrders;
+
+  if (dashFilter.type === 'all') {
+    const year = new Date().getFullYear();
+    filteredOrders = allOrders.filter(o => {
+      const d = o.fields['Order Date'] || o.fields['Creation date'] || '';
+      return d.startsWith(year.toString());
+    });
+  } else if (dashFilter.type === 'month') {
+    filteredOrders = allOrders.filter(o => {
+      const d = o.fields['Order Date'] || '';
+      return d.startsWith(dashFilter.value);
+    });
+  } else if (dashFilter.type === 'event') {
+    filteredOrders = allOrders.filter(o => {
+      const ev = o.fields['Sales event'] || [];
+      return ev.includes(dashFilter.value);
+    });
+  }
+
+  const orderIds = new Set(filteredOrders.map(o => o.id));
+  return allOrderLines.filter(l => {
+    const orderRefs = l.fields['Order'] || [];
+    return orderRefs.some(id => orderIds.has(id));
+  });
+}
+
+// ─── WINE COLOR MAPPING ───────────────────────────────────────────
+function getWineColor(name) {
+  const n = (name || '').toLowerCase();
+  if (n.includes('rosé') || n.includes('rose')) return { bg: '#f9d0dc', bar: '#e07090', text: '#8b3050', label: 'Rosé' };
+  if (n.includes('sec') || n.includes('blanc') || n.includes('sémillon') || n.includes('semillon')) return { bg: '#d4edd8', bar: '#5aaa6a', text: '#2d6b38', label: 'Blanc Sec' };
+  if (n.includes('rouge') || n.includes('cadillac') || n.includes('côtes') || n.includes('cotes')) return { bg: '#f5d0d0', bar: '#c04040', text: '#7a1a1a', label: 'Rouge' };
+  if (n.includes('loupiac') || n.includes('liquoreux') || n.includes('moelleux') || n.includes('sweet')) return { bg: '#f5e6c0', bar: '#c9952a', text: '#7a5a00', label: 'Liquoreux' };
+  return { bg: '#e8e8e8', bar: '#999', text: '#555', label: 'Autre' };
+}
+
+function getLineTypeColor(type) {
+  const t = (type || '').toLowerCase();
+  if (t === 'gift' || t === 'sample' || t === 'personal consumption') return { bg: '#f0f0f0', bar: '#bbb', text: '#777' };
+  return null;
+}
+
+function renderDashboard() {
+  const lines = getFilteredLines();
+  const year = new Date().getFullYear();
+
+  let label = `Année ${year}`;
+  if (dashFilter.type === 'month') label = `Mois : ${dashFilter.value}`;
+  else if (dashFilter.type === 'event') {
+    const ev = allEvents.find(e => e.id === dashFilter.value);
+    label = `Événement : ${ev?.fields['Name'] || '–'}`;
+  }
+  document.getElementById('dash-period-label').textContent = label;
+
+  let totalCA = 0, totalBtl = 0, totalGifts = 0;
+  const clientSet = new Set();
+  const wineStats = {};
+  const giftStats = {};
+
+  lines.forEach(l => {
+    const qty = l.fields['Quantity'] || 0;
+    const unitPrice = l.fields['Unit price (from Bottle price)'] || 0;
+    const price = Array.isArray(unitPrice) ? (unitPrice[0] || 0) : (unitPrice || 0);
+    const lineType = l.fields['Line type'] || 'Sale';
+
+    // Resolve wine name — 3 fallback approaches
+    let wineName = '–';
+
+    // 1. Via Millésime → Wine Vintage → Wine linked field
+    const vintageIds = l.fields['Millésime'] || [];
+    const vintage = allVintages.find(v => vintageIds.includes(v.id));
+    if (vintage) {
+      const vWineIds = vintage.fields['Wine'] || vintage.fields['Wines'] || vintage.fields['Appellation'] || [];
+      if (vWineIds.length > 0) {
+        const wine = allWines.find(w => vWineIds.includes(w.id));
+        if (wine) wineName = wine.fields['Name'] || wine.fields['Wine name'] || '–';
+      }
+      // 2. Extract from vintage name (remove trailing year e.g. "Loupiac 2022" → "Loupiac")
+      if (wineName === '–') {
+        const vName = vintage.fields['Name'] || vintage.fields['Vintage'] || vintage.fields['Millésime'] || '';
+        wineName = vName.replace(/\s+\d{4}$/, '').trim() || vName || '–';
+      }
+    }
+
+    // 3. Via "Wine from price list" → Price List label (before " - ")
+    if (wineName === '–') {
+      const plIds = l.fields['Wine from price list'] || [];
+      const pl = allPriceLists.find(p => plIds.includes(p.id));
+      if (pl) {
+        const label = pl.fields['Price label'] || pl.fields['Name'] || '';
+        wineName = label.split(' - ')[0].split(' – ')[0].trim() || '–';
+      }
+    }
+
+    const isGift = ['Gift', 'Sample', 'Personal consumption'].includes(lineType);
+
+    if (isGift) {
+      totalGifts += qty;
+      const giftValue = qty * price;
+      if (!giftStats[wineName]) giftStats[wineName] = { name: wineName, qty: 0, value: 0, type: lineType };
+      giftStats[wineName].qty += qty;
+      giftStats[wineName].value += giftValue;
+    } else {
+      const lineCA = qty * price;
+      totalCA += lineCA;
+      totalBtl += qty;
+      if (!wineStats[wineName]) wineStats[wineName] = { name: wineName, ca: 0, btl: 0, prices: [] };
+      wineStats[wineName].ca += lineCA;
+      wineStats[wineName].btl += qty;
+      if (price > 0) wineStats[wineName].prices.push(price);
+    }
+  });
+
+  // Count clients
+  const filteredOrders = allOrders.filter(o => {
+    if (dashFilter.type === 'all') return (o.fields['Order Date'] || '').startsWith(new Date().getFullYear().toString());
+    if (dashFilter.type === 'month') return (o.fields['Order Date'] || '').startsWith(dashFilter.value);
+    if (dashFilter.type === 'event') return (o.fields['Sales event'] || []).includes(dashFilter.value);
+    return true;
+  });
+  filteredOrders.forEach(o => (o.fields['Customer'] || []).forEach(id => clientSet.add(id)));
+
+  document.getElementById('kpi-ca').textContent = totalCA > 0 ? totalCA.toFixed(0) + ' €' : '–';
+  document.getElementById('kpi-btl').textContent = totalBtl > 0 ? totalBtl : '–';
+  document.getElementById('kpi-clients').textContent = clientSet.size > 0 ? clientSet.size : '–';
+
+  const sorted = Object.values(wineStats).sort((a, b) => b.ca - a.ca);
+  const maxCA = sorted.length > 0 ? sorted[0].ca : 1;
+  const maxBtl = sorted.length > 0 ? Math.max(...sorted.map(w => w.btl)) : 1;
+
+  const container = document.getElementById('wine-breakdown');
+  if (sorted.length === 0 && Object.keys(giftStats).length === 0) {
+    container.innerHTML = `<div class="empty-state" style="padding-top:32px;"><div class="empty-icon">🍷</div><div class="empty-text">Aucune vente sur cette période</div></div>`;
+    return;
+  }
+
+  // Donut-style summary SVG
+  const total = sorted.reduce((a,w) => a + w.ca, 0);
+  let angle = -90;
+  const cx = 60, cy = 60, r = 48, stroke = 16;
+  const circumference = 2 * Math.PI * r;
+  let donutPaths = '';
+  sorted.forEach(w => {
+    const pct = total > 0 ? w.ca / total : 0;
+    const c = getWineColor(w.name);
+    const dashLen = pct * circumference;
+    const dashOffset = circumference - dashLen;
+    const startAngle = angle * Math.PI / 180;
+    const endAngle = (angle + pct * 360) * Math.PI / 180;
+    const x1 = cx + r * Math.cos(startAngle);
+    const y1 = cy + r * Math.sin(startAngle);
+    const x2 = cx + r * Math.cos(endAngle);
+    const y2 = cy + r * Math.sin(endAngle);
+    const largeArc = pct > 0.5 ? 1 : 0;
+    donutPaths += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${c.bar}" opacity="0.85"/>`;
+    angle += pct * 360;
+  });
+  // White hole for donut
+  donutPaths += `<circle cx="${cx}" cy="${cy}" r="${r - stroke}" fill="white"/>`;
+  donutPaths += `<text x="${cx}" y="${cy - 6}" text-anchor="middle" font-family="Raleway" font-size="13" font-weight="300" fill="#111">${totalCA.toFixed(0)} €</text>`;
+  donutPaths += `<text x="${cx}" y="${cy + 10}" text-anchor="middle" font-family="Raleway" font-size="10" font-weight="300" fill="#888">${totalBtl} btl</text>`;
+
+  // Wine cards
+  const wineCards = sorted.map(w => {
+    const c = getWineColor(w.name);
+    const avgPrice = w.prices.length > 0 ? (w.prices.reduce((a,b)=>a+b,0)/w.prices.length).toFixed(2) : '–';
+    const pctCA = total > 0 ? (w.ca / total * 100).toFixed(0) : 0;
+    const pctBtl = maxBtl > 0 ? (w.btl / maxBtl * 100) : 0;
+    return `
+    <div style="background:${c.bg}; border-radius:2px; padding:14px 14px 12px; margin-bottom:8px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+        <div>
+          <div style="font-size:13px; font-weight:400; color:${c.text}; letter-spacing:0.04em;">${w.name}</div>
+          <div style="font-size:11px; font-weight:300; color:${c.text}; opacity:0.8; margin-top:2px;">${c.label}</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:18px; font-weight:200; color:${c.text};">${w.ca.toFixed(0)} €</div>
+          <div style="font-size:10px; font-weight:300; color:${c.text}; opacity:0.7;">${pctCA}% du CA</div>
+        </div>
+      </div>
+      <!-- Bar bouteilles -->
+      <div style="background:rgba(255,255,255,0.5); height:4px; border-radius:2px; margin-bottom:8px; overflow:hidden;">
+        <div style="background:${c.bar}; height:4px; width:${pctBtl}%; transition:width 0.6s; border-radius:2px;"></div>
+      </div>
+      <div style="display:flex; gap:16px;">
+        <div style="font-size:11px; font-weight:300; color:${c.text}; opacity:0.85;"><span style="font-weight:500;">${w.btl}</span> btl vendues</div>
+        <div style="font-size:11px; font-weight:300; color:${c.text}; opacity:0.85;">PM <span style="font-weight:500;">${avgPrice} €</span></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Gifts section
+  const giftsHtml = Object.values(giftStats).length > 0 ? (() => {
+    const totalGiftValue = Object.values(giftStats).reduce((a, g) => a + g.value, 0);
+    return `
+    <div style="margin-top:16px; padding:12px; background:#f5f5f5; border-radius:2px;">
+      <div style="font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:#888; margin-bottom:8px;">Offerts / Dégustations</div>
+      ${Object.values(giftStats).map(g => `
+        <div style="display:flex; justify-content:space-between; align-items:baseline; font-size:12px; font-weight:300; color:#666; padding:4px 0; border-bottom:1px solid #ebebeb;">
+          <span>${g.name}</span>
+          <div style="display:flex; gap:16px; align-items:baseline;">
+            <span style="color:#999;">${g.qty} btl</span>
+            <span style="font-weight:400; color:#555;">${g.value.toFixed(2)} €</span>
+          </div>
+        </div>`).join('')}
+      <div style="display:flex; justify-content:space-between; align-items:baseline; font-size:12px; padding-top:8px;">
+        <span style="font-weight:400; color:#888; letter-spacing:0.06em; text-transform:uppercase; font-size:10px;">Total offerts</span>
+        <div style="display:flex; gap:16px;">
+          <span style="font-weight:400; color:#666;">${totalGifts} btl</span>
+          <span style="font-weight:500; color:#555;">${totalGiftValue.toFixed(2)} €</span>
+        </div>
+      </div>
+      <div style="margin-top:6px; font-size:10px; font-weight:300; color:#bbb; font-style:italic;">Valorisé au prix de vente catalogue</div>
+    </div>`;
+  })() : '';
+
+  container.innerHTML = `
+    <!-- Donut chart -->
+    <div style="display:flex; align-items:center; gap:20px; padding:16px 0 20px; border-bottom:1px solid var(--border); margin-bottom:16px;">
+      <svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0;">${donutPaths}</svg>
+      <div style="flex:1;">
+        ${sorted.map(w => {
+          const c = getWineColor(w.name);
+          const pct = total > 0 ? (w.ca/total*100).toFixed(0) : 0;
+          return `<div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;">
+            <div style="width:10px; height:10px; background:${c.bar}; border-radius:50%; flex-shrink:0;"></div>
+            <div style="font-size:12px; font-weight:300; color:var(--black); flex:1;">${w.name}</div>
+            <div style="font-size:12px; font-weight:400; color:var(--gray);">${pct}%</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+    <!-- Wine cards -->
+    ${wineCards}
+    ${giftsHtml}
+    <!-- Total ligne -->
+    <div style="padding:14px 0; display:flex; justify-content:space-between; border-top:2px solid var(--black); margin-top:8px;">
+      <div style="font-size:10px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--gray);">Total ventes</div>
+      <div style="font-size:16px; font-weight:300;">${totalBtl} btl · ${totalCA.toFixed(0)} €</div>
+    </div>`;
+}
+
+// ─── PAYMENT ──────────────────────────────────────────────────────
+function setPayment(method) {
+  selectedPayment = method;
+  ['pay-cb','pay-cash','pay-chq'].forEach(id => {
+    document.getElementById(id).classList.remove('btn-black');
+    document.getElementById(id).classList.add('btn-outline');
+  });
+  const map = { 'CB': 'pay-cb', 'Cash': 'pay-cash', 'Chèque': 'pay-chq' };
+  const btn = document.getElementById(map[method]);
+  if (btn) { btn.classList.remove('btn-outline'); btn.classList.add('btn-black'); }
+  document.getElementById('payment-status').textContent = `✓ Paiement ${method} enregistré`;
+}
+
+// ─── EMAIL RECAP ──────────────────────────────────────────────────
+const GOOGLE_REVIEW_URL = 'https://g.page/r/VOTRE_ID_GOOGLE/review'; // ← remplacez par votre lien Google
+const DOMAINE_SITE = 'www.domaineLeFilh.fr';
+
+function sendRecapEmail() {
+  const { customerName, customerEmail, lines, totalEur, totalBtl, eventName } = lastOrderSummary;
+  if (!customerEmail) { showToast('Pas d\'email pour ce client'); return; }
+
+  const lignes = lines.map(l => `  • ${l.wineName} ${l.vintageName} × ${l.qty} = ${(l.qty * l.price).toFixed(2)} €`).join('\n');
+  const paiement = selectedPayment ? `\nMode de paiement : ${selectedPayment}` : '';
+
+  const subject = encodeURIComponent(`Votre commande – Domaine Le Filh`);
+  const body = encodeURIComponent(
+`Bonjour ${customerName},
+
+Merci infiniment pour votre visite et votre confiance au Domaine Le Filh !
+
+Voici le récapitulatif de votre commande${eventName ? ` (${eventName})` : ''} :
+
+${lignes}
+─────────────────────────────
+Total : ${totalEur.toFixed(2)} € pour ${totalBtl} bouteille${totalBtl > 1 ? 's' : ''}${paiement}
+
+
+━━━ ⭐ UN AVIS NOUS FERAIT VRAIMENT PLAISIR ━━━
+
+Si vous avez apprécié votre visite, un avis Google aide
+enormément un petit domaine comme le nôtre.
+
+👉 Cliquez ici pour laisser un avis :
+https://g.page/r/Cdn39dob-DisEBM/review
+
+Cela ne prend que 30 secondes et c'est très précieux pour nous !
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+Avec toute notre amitié vigneronne,
+Cécile & Patrick Arnaud
+Domaine Le Filh – Donzac (Gironde)
+${DOMAINE_SITE}`
+  );
+
+  window.location.href = `mailto:${customerEmail}?subject=${subject}&body=${body}`;
+  document.getElementById('email-status').textContent = '✓ Email ouvert dans votre messagerie';
+}
+
+// ─── EXPORT CSV ───────────────────────────────────────────────────
+async function exportCSV() {
+  showToast('Préparation export…');
+  try {
+    const orders = await airtable('Orders');
+    const lines = await airtable('Order Lines');
+    const header = ['Client', 'Email', 'Événement', 'Date', 'Vin', 'Millésime', 'Quantité', 'Prix unitaire', 'Total ligne'];
+    const rows = [];
+    for (const o of orders) {
+      const customer = allCustomers.find(c => (o.fields['Customer'] || []).includes(c.id));
+      const event = allEvents.find(e => (o.fields['Sales event'] || []).includes(e.id));
+      const orderLineIds = o.fields['Order Lines'] || o.fields['Order lines'] || [];
+      const oLines = lines.filter(l => orderLineIds.includes(l.id));
+      if (oLines.length === 0) {
+        rows.push([
+          customer?.fields['Customer name'] || '–',
+          customer?.fields['Email'] || '',
+          event?.fields['Name'] || '–',
+          o.fields['Order Date'] || '',
+          '', '', '', '', ''
+        ].join(';'));
+      } else {
+        for (const l of oLines) {
+          const vintage = allVintages.find(v => (l.fields['Millésime'] || []).includes(v.id));
+          const wine = vintage ? allWines.find(w => (vintage.fields['Wine'] || vintage.fields['Wines'] || []).includes(w.id)) : null;
+          rows.push([
+            customer?.fields['Customer name'] || '–',
+            customer?.fields['Email'] || '',
+            event?.fields['Name'] || '–',
+            o.fields['Order Date'] || '',
+            wine?.fields['Name'] || '–',
+            vintage?.fields['Vintage'] || vintage?.fields['Millésime'] || '–',
+            l.fields['Quantity'] || 0,
+            l.fields['Bottle price'] || l.fields['Unit price'] || 0,
+            l.fields['Line total'] || l.fields['Sold amount'] || 0
+          ].join(';'));
+        }
+      }
+    }
+    const csv = '\uFEFF' + [header.join(';'), ...rows].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `lefilh-export-${new Date().toLocaleDateString('fr-FR').replace(/\//g, '-')}.csv`;
+    a.click();
+    showToast('Export téléchargé ✓');
+  } catch(e) {
+    showToast('Erreur export');
+    console.error(e);
+  }
+}
+
+// ─── UTILS ────────────────────────────────────────────────────────
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+});
+
+// ─── START ────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
